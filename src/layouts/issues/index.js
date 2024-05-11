@@ -16,7 +16,7 @@ import DataTable from "examples/Tables/DataTable";
 
 // Overview page components
 import Header from "layouts/issues/components/Header";
-import projectsTableData from "layouts/tables/data/projectsTableData";
+import Thread from "layouts/issues/components/Threads";
 
 function Overview() {
   const { columns: pColumns, rows: pRows } = projectsTableData();
@@ -42,32 +42,11 @@ function Overview() {
               />
               <Divider orientation="vertical" sx={{ mx: 0 }} />
             </Grid>
-            <Grid item xs={12}>
-              <Card>
-                <MDBox
-                  mx={2}
-                  mt={-3}
-                  py={3}
-                  px={2}
-                  variant="gradient"
-                  bgColor="dark"
-                  borderRadius="lg"
-                  coloredShadow="dark"
-                >
-                  <MDTypography variant="h6" color="white">
-                    Proposals
-                  </MDTypography>
-                </MDBox>
-                <MDBox pt={3}>
-                  <DataTable
-                    table={{ columns: pColumns, rows: pRows }}
-                    isSorted={false}
-                    entriesPerPage={false}
-                    showTotalEntries={false}
-                    noEndBorder
-                  />
-                </MDBox>
-              </Card>
+            <Grid item xs={12} md={12} xl={12}>
+              {" "}
+              {/* Ensure the Thread component spans the full width */}
+              <Thread sx={{ width: "100%" }} />
+              {/* Set width to 100% to cover the full width */}
             </Grid>
           </Grid>
         </MDBox>
