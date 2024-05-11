@@ -1,6 +1,5 @@
 import sendOtpEmail from "controllers/sendOtpEmail";
 import { useContext, useRef, useState } from "react";
-import { useState } from "react";
 
 // react-router-dom components
 import { Link, useNavigate } from "react-router-dom";
