@@ -2,7 +2,8 @@
 import Tables from "layouts/tables";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
-import SignUp from "layouts/authentication/sign-up";
+
+// import SignUp from "layouts/authentication/sign-up";
 import Issues from "layouts/issues";
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -14,19 +15,11 @@ const routes = [
     key: "dashboard",
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
-    component: <Dashboard />,
+    component: <Tables />,
   },
   {
     route: "/issues",
     component: <Issues />,
-  },
-  {
-    type: "collapse",
-    name: "Tables",
-    key: "tables",
-    icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/tables",
-    component: <Tables />,
   },
   {
     type: "collapse",
