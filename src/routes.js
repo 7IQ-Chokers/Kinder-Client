@@ -5,8 +5,8 @@ import SignIn from "layouts/authentication/sign-in";
 
 // import SignUp from "layouts/authentication/sign-up";
 import Proposals from "layouts/proposals";
-// import Issues from "layouts/issues";
-// import Issues from "layouts/projects";
+import Issues from "layouts/issues";
+import Projects from "layouts/projects";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -24,14 +24,14 @@ const routes = [
     route: "/proposals",
     component: <Proposals />,
   },
-  // {
-  //   route: "/issues",
-  //   component: <Issues />,
-  // },
-  // {
-  //   route: "/proposals",
-  //   component: <Projects />,
-  // },
+  {
+    route: "/issues",
+    component: <Issues />,
+  },
+  {
+    route: "/projects",
+    component: <Projects />,
+  },
   {
     type: "collapse",
     name: "Profile",
