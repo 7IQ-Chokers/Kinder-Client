@@ -1,7 +1,8 @@
+import sendOtpEmail from "controllers/sendOtpEmail";
 import { useRef, useState } from "react";
 
 // react-router-dom components
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -18,10 +19,14 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
+import submitOtp from "controllers/submitOtp";
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
   const [otpStage, setOtpStage] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+  const [userOtp, setUserOtp] = useState("");
+  const navigate = useNavigate();
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
@@ -53,6 +58,7 @@ function Basic() {
             onSubmit={(e) => {
               e.preventDefault();
               setOtpStage(true);
+              sendOtpEmail(userEmail);
             }}
           >
             <MDBox mb={2}>
@@ -60,13 +66,25 @@ function Basic() {
                 type="email"
                 label="Email"
                 fullWidth
+                value={userEmail}
+                onChange={(e) => {
+                  setUserEmail(e.target.value);
+                }}
                 disabled={otpStage}
               />
             </MDBox>
 
             {otpStage ? (
               <MDBox mb={2}>
-                <MDInput type="text" label="Enter OTP" fullWidth />
+                <MDInput
+                  type="text"
+                  label="Enter OTP"
+                  fullWidth
+                  value={userOtp}
+                  onChange={(e) => {
+                    setUserOtp(e.target.value);
+                  }}
+                />
               </MDBox>
             ) : (
               <></>
@@ -78,6 +96,7 @@ function Basic() {
                 mb={1}
                 onClick={() => {
                   setOtpStage(true);
+                  sendOtpEmail(userEmail);
                 }}
               >
                 <MDButton variant="gradient" color="info" fullWidth>
@@ -88,7 +107,13 @@ function Basic() {
               <></>
             )}
             {otpStage ? (
-              <MDBox mt={4} mb={1}>
+              <MDBox
+                mt={4}
+                mb={1}
+                onClick={() => {
+                  submitOtp(userEmail, userOtp);
+                }}
+              >
                 <MDButton variant="gradient" color="info" fullWidth>
                   submit otp
                 </MDButton>

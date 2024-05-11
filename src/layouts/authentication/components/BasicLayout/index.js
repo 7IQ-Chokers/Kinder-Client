@@ -1,3 +1,6 @@
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 // prop-types is a library for typechecking of props
 import PropTypes from "prop-types";
 
@@ -45,6 +48,7 @@ function BasicLayout({ image, children }) {
           height="100%"
         >
           <Grid item xs={11} sm={9} md={5} lg={4} xl={3}>
+            <ToastContainer />
             {children}
           </Grid>
         </Grid>
