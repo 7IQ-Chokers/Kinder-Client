@@ -4,7 +4,10 @@ import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 
 // import SignUp from "layouts/authentication/sign-up";
-import Issues from "layouts/issues";
+import Proposals from "layouts/proposals";
+// import Issues from "layouts/issues";
+// import Issues from "layouts/projects";
+
 // @mui icons
 import Icon from "@mui/material/Icon";
 
@@ -18,9 +21,17 @@ const routes = [
     component: <Tables />,
   },
   {
-    route: "/issues",
-    component: <Issues />,
+    route: "/proposals",
+    component: <Proposals />,
   },
+  // {
+  //   route: "/issues",
+  //   component: <Issues />,
+  // },
+  // {
+  //   route: "/proposals",
+  //   component: <Projects />,
+  // },
   {
     type: "collapse",
     name: "Profile",

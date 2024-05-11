@@ -12,8 +12,8 @@ import Footer from "examples/Footer";
 import Issuecards from "examples/Cards/Issuecard";
 
 // Overview page components
-import Header from "layouts/issues/components/Header";
-import Thread from "layouts/issues/components/Threads";
+import Header from "layouts/proposals/components/Header";
+import Thread from "layouts/proposals/components/Threads";
 
 function Overview() {
   return (
