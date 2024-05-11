@@ -11,11 +11,11 @@ import Dashboard from './components/dashboard';
 const router = createBrowserRouter([
   {
     path: "/dashboard",
-    element: Dashboard(),
+    element: <Dashboard></Dashboard>,
   },
   {
     path: "/profile",
-    element: Profile(),
+    element: <Profile></Profile>,
   },
 ]);
 
