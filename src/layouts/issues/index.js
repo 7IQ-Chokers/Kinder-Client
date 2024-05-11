@@ -13,6 +13,7 @@ import Issuecards from "examples/Cards/Issuecard";
 
 // Overview page components
 import Header from "layouts/issues/components/Header";
+import Thread from "layouts/issues/components/Threads";
 
 function Overview() {
   return (
@@ -38,6 +39,10 @@ function Overview() {
                 shadow={false}
               />
               <Divider orientation="vertical" sx={{ mx: 0 }} />
+            </Grid>
+            <Grid item xs={12} md={12} xl={12}> {/* Ensure the Thread component spans the full width */}
+              <Thread sx={{ width: "100%" }} />
+               {/* Set width to 100% to cover the full width */}
             </Grid>
           </Grid>
         </MDBox>
