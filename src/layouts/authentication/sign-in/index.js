@@ -1,5 +1,5 @@
 import sendOtpEmail from "controllers/sendOtpEmail";
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 
 // react-router-dom components
 import { Link, useNavigate } from "react-router-dom";
@@ -30,6 +30,13 @@ function Basic() {
   const navigate = useNavigate();
 
   const { userAuthToken, setUserAuthToken } = useContext(UserAuthContext);
+
+  useEffect(() => {
+    // If user already loggedin, goto dashboard
+    if (userAuthToken) {
+      navigate("/dashboard");
+    }
+  }, []);
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
@@ -116,6 +123,7 @@ function Basic() {
                 onClick={async () => {
                   const jwt = await submitOtp(userEmail, userOtp);
                   if (jwt) {
+                    window.localStorage.setItem("userAuthToken", jwt);
                     setUserAuthToken(jwt);
                     navigate("/dashboard", { replace: true });
                   }

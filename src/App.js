@@ -135,6 +135,18 @@ export default function App() {
 
   const [userAuthToken, setUserAuthToken] = useState(null);
 
+  useEffect(() => {
+    // If authToken already in localStorage, load that
+    const localStorageAuthToken = window.localStorage.getItem("userAuthToken");
+    if (
+      localStorageAuthToken !== "" ||
+      localStorageAuthToken !== null ||
+      localStorageAuthToken !== undefined
+    ) {
+      setUserAuthToken(localStorageAuthToken);
+    }
+  }, []);
+
   return direction === "rtl" ? (
     <UserAuthContext.Provider value={{ userAuthToken, setUserAuthToken }}>
       <CacheProvider value={rtlCache}>
