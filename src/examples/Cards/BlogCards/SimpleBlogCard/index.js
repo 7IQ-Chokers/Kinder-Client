@@ -95,7 +95,7 @@ SimpleBlogCard.propTypes = {
       "light",
       "default",
     ]),
-    label: PropTypes.string.isRequired,
+    tag: PropTypes.string.isRequired,
   }).isRequired,
 };
 
