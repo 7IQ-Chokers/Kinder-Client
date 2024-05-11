@@ -29,7 +29,8 @@ import MDAvatar from "components/MDAvatar";
 import MDButton from "components/MDButton";
 
 function ProfilesList({ title, profiles, shadow }) {
-  const renderProfiles = profiles.map(({ image, name, description, action }) => (
+  const { image, name, description, action } = profiles;
+  const renderProfiles =
     <MDBox key={name} component="li" display="flex" alignItems="center" py={1} mb={1}>
       <MDBox mr={2}>
         <MDAvatar src={image} alt="something here" shadow="md" />
@@ -61,7 +62,7 @@ function ProfilesList({ title, profiles, shadow }) {
         )}
       </MDBox>
     </MDBox>
-  ));
+  
 
   return (
     <Card sx={{ height: "100%", boxShadow: !shadow && "none" }}>

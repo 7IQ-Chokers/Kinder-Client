@@ -1,18 +1,3 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useState } from "react";
 
 // @mui material components
@@ -24,12 +9,7 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 
 function PlatformSettings() {
-  const [followsMe, setFollowsMe] = useState(true);
-  const [answersPost, setAnswersPost] = useState(false);
-  const [mentionsMe, setMentionsMe] = useState(true);
-  const [newLaunches, setNewLaunches] = useState(false);
-  const [productUpdate, setProductUpdate] = useState(true);
-  const [newsletter, setNewsletter] = useState(false);
+  const [isInvestor, setIsInvestor] = useState(false);
 
   return (
     <Card sx={{ boxShadow: "none" }}>
@@ -44,15 +24,15 @@ function PlatformSettings() {
         </MDTypography>
         <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5}>
           <MDBox mt={0.5}>
-            <Switch checked={followsMe} onChange={() => setFollowsMe(!followsMe)} />
+            <Switch checked={isInvestor} onChange={() => setIsInvestor(!isInvestor)} />
           </MDBox>
           <MDBox width="80%" ml={0.5}>
             <MDTypography variant="button" fontWeight="regular" color="text">
-              Email me when someone follows me
+              Investor
             </MDTypography>
           </MDBox>
         </MDBox>
-        <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5}>
+        {/* <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5}>
           <MDBox mt={0.5}>
             <Switch checked={answersPost} onChange={() => setAnswersPost(!answersPost)} />
           </MDBox>
@@ -71,8 +51,8 @@ function PlatformSettings() {
               Email me when someone mentions me
             </MDTypography>
           </MDBox>
-        </MDBox>
-        <MDBox mt={3}>
+        </MDBox> */}
+        {/* <MDBox mt={3}>
           <MDTypography variant="caption" fontWeight="bold" color="text" textTransform="uppercase">
             application
           </MDTypography>
@@ -106,7 +86,7 @@ function PlatformSettings() {
               Subscribe to newsletter
             </MDTypography>
           </MDBox>
-        </MDBox>
+        </MDBox> */}
       </MDBox>
     </Card>
   );
