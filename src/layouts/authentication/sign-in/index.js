@@ -1,5 +1,5 @@
 import sendOtpEmail from "controllers/sendOtpEmail";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 
 // react-router-dom components
 import { Link, useNavigate } from "react-router-dom";
@@ -20,6 +20,7 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 import submitOtp from "controllers/submitOtp";
+import { UserAuthContext } from "context/UserAuthContext";
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
@@ -27,6 +28,8 @@ function Basic() {
   const [userEmail, setUserEmail] = useState("");
   const [userOtp, setUserOtp] = useState("");
   const navigate = useNavigate();
+
+  const { userAuthToken, setUserAuthToken } = useContext(UserAuthContext);
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
@@ -110,8 +113,12 @@ function Basic() {
               <MDBox
                 mt={4}
                 mb={1}
-                onClick={() => {
-                  submitOtp(userEmail, userOtp);
+                onClick={async () => {
+                  const jwt = await submitOtp(userEmail, userOtp);
+                  if (jwt) {
+                    setUserAuthToken(jwt);
+                    navigate("/dashboard", { replace: true });
+                  }
                 }}
               >
                 <MDButton variant="gradient" color="info" fullWidth>

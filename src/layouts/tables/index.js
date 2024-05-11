@@ -15,12 +15,15 @@ import DataTable from "examples/Tables/DataTable";
 // Data
 import authorsTableData from "layouts/tables/data/issuesTableData";
 import projectsTableData from "layouts/tables/data/projectsTableData";
+import { useContext } from "react";
+import { UserAuthContext } from "context/UserAuthContext";
 
 function Tables() {
   const { columns, rows } = authorsTableData();
   const { columns: pColumns, rows: pRows } = projectsTableData();
+  const { userAuthToken, setUserAuthToken } = useContext(UserAuthContext);
 
-  return (
+  return userAuthToken ? (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox pt={6} pb={3}>
@@ -83,6 +86,8 @@ function Tables() {
       </MDBox>
       <Footer />
     </DashboardLayout>
+  ) : (
+    <center>Login First!</center>
   );
 }
 

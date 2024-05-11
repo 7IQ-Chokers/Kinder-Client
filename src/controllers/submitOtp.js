@@ -10,13 +10,17 @@ export default async function submitOtp(email, otp) {
       method: "POST",
       body: JSON.stringify({ email: email, otp: otp }),
     });
-    const y = await x.text();
+    const y = await x.json();
     if (x.status !== 200) {
       toast("Incorrect OTP!", { type: "error" });
+      return null;
     } else {
       toast("OTP Validated", { type: "success" });
+      return y.jwt;
     }
   } catch (error) {
+    toast("Incorrect OTP!", { type: "error" });
     console.log(error);
+    return null;
   }
 }
