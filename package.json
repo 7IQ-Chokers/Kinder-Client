@@ -1,8 +1,8 @@
 {
   "name": "connectnsolve",
   "version": "2.2.0",
-  "author": "Creative Tim",
-  "description": "React version of Material Dashboard 2 by Creative Tim",
+  "author": "7IQ-Chokers",
+  "description": "React version of Material Dashboard 2 by 7IQ-Chokers",
   "dependencies": {
     "@emotion/cache": "11.10.8",
     "@emotion/react": "11.10.8",
