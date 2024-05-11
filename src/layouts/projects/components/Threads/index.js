@@ -36,7 +36,7 @@ class ThreadComponent extends React.Component {
     return (
       <Card>
         <Box p={2}>
-          <Typography variant="h5">Comments</Typography>
+          <Typography variant="h5">Commands</Typography>
           <Divider />
           <Box mt={2} mb={2}>
             {/* Render existing messages */}
