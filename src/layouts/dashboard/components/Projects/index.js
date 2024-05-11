@@ -46,7 +46,12 @@ function Projects() {
 
   return (
     <Card>
-      <MDBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
+      <MDBox
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        p={3}
+      >
         <MDBox>
           <MDTypography variant="h6" gutterBottom>
             Projects
@@ -67,7 +72,11 @@ function Projects() {
           </MDBox>
         </MDBox>
         <MDBox color="text" px={2}>
-          <Icon sx={{ cursor: "pointer", fontWeight: "bold" }} fontSize="small" onClick={openMenu}>
+          <Icon
+            sx={{ cursor: "pointer", fontWeight: "bold" }}
+            fontSize="small"
+            onClick={openMenu}
+          >
             more_vert
           </Icon>
         </MDBox>

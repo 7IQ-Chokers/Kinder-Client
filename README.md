@@ -13,6 +13,7 @@ This free MUI & React Dashboard is coming with prebuilt design blocks, so the de
 switching from our pages to the real website is very easy to be done.
 
 Special thanks go to:
+
 - [Nepcha Analytics](https://nepcha.com?ref=readme) for the analytics tool. Nepcha is already integrated with Material Dashboard React. You can use it to gain insights into your sources of traffic.
 
 **Documentation built by Developers**
@@ -205,15 +206,3 @@ If you have questions or need help integrating the product please [contact us](h
 - [Freebies](https://www.creative-tim.com/bootstrap-themes/free?ref=readme-mdr) from Creative Tim
 
 - [Affiliate Program](https://www.creative-tim.com/affiliates/new?ref=readme-mdr) (earn money)
-
-##### Social Media
-
-Twitter: <https://twitter.com/CreativeTim>
-
-Facebook: <https://www.facebook.com/CreativeTim>
-
-Dribbble: <https://dribbble.com/creativetim>
-
-Google+: <https://plus.google.com/+CreativetimPage>
-
-Instagram: <https://instagram.com/creativetimofficial>

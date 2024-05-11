@@ -13,7 +13,7 @@ import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-import authorsTableData from "layouts/tables/data/authorsTableData";
+import authorsTableData from "layouts/tables/data/issuesTableData";
 import projectsTableData from "layouts/tables/data/projectsTableData";
 
 function Tables() {
@@ -38,7 +38,7 @@ function Tables() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Problem
+                  Issues
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
