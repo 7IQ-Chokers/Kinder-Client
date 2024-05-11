@@ -100,7 +100,7 @@ function DefaultNavbar({ transparent, light, action }) {
             fontWeight="bold"
             color={light ? "white" : "dark"}
           >
-            Connect N Share
+            ConnectNSolve
           </MDTypography>
         </MDBox>
         <MDBox color="inherit" display={{ xs: "none", lg: "flex" }} m={0} p={0}>
@@ -125,7 +125,7 @@ function DefaultNavbar({ transparent, light, action }) {
           <DefaultNavbarLink
             icon="key"
             name="sign in"
-            route="/authentication/sign-in"
+            route="/"
             light={light}
           />
         </MDBox>

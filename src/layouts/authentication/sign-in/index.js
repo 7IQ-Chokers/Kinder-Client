@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 // react-router-dom components
 import { Link } from "react-router-dom";
@@ -21,6 +21,7 @@ import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
+  const [otpStage, setOtpStage] = useState(false);
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
@@ -39,23 +40,62 @@ function Basic() {
           textAlign="center"
         >
           <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+            ConnectNSolve
+          </MDTypography>
+          <MDTypography variant="h5" fontWeight="medium" color="white" mt={1}>
             Sign in
           </MDTypography>
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
-          <MDBox component="form" role="form">
+          <MDBox
+            component="form"
+            role="form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              setOtpStage(true);
+            }}
+          >
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" fullWidth />
-            </MDBox>
-            <MDBox mb={2}>
-              <MDInput type="password" label="Password" fullWidth />
+              <MDInput
+                type="email"
+                label="Email"
+                fullWidth
+                disabled={otpStage}
+              />
             </MDBox>
 
-            <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
-                sign in
-              </MDButton>
-            </MDBox>
+            {otpStage ? (
+              <MDBox mb={2}>
+                <MDInput type="text" label="Enter OTP" fullWidth />
+              </MDBox>
+            ) : (
+              <></>
+            )}
+
+            {!otpStage ? (
+              <MDBox
+                mt={4}
+                mb={1}
+                onClick={() => {
+                  setOtpStage(true);
+                }}
+              >
+                <MDButton variant="gradient" color="info" fullWidth>
+                  sign in
+                </MDButton>
+              </MDBox>
+            ) : (
+              <></>
+            )}
+            {otpStage ? (
+              <MDBox mt={4} mb={1}>
+                <MDButton variant="gradient" color="info" fullWidth>
+                  submit otp
+                </MDButton>
+              </MDBox>
+            ) : (
+              <></>
+            )}
           </MDBox>
         </MDBox>
       </Card>
