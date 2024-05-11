@@ -35,7 +35,7 @@ function Overview() {
                   email: "alecthompson@mail.com",
                   location: "USA",
                 }}
-                action={{ route: "/contribute", label: "Contribute", tooltip: "Edit Profile" }}
+                action={{ route: "/projects/create", id:"proposal_id", label: "Contribute", tooltip: "Edit Profile" }}
                 shadow={false}
               />
               <Divider orientation="vertical" sx={{ mx: 0 }} />

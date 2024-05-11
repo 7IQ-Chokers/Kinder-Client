@@ -74,11 +74,11 @@ function SimpleBlogCard({ image, title, description, action, tags}) {
           {rendertag}
         </MDBox>
         {action.type === "external" ? (
-          <MuiLink href={action.route} target="_blank" rel="noreferrer">
+          <Link to={action.route} state= {{ id: action.id}} target="_blank" rel="noopener noreferrer">
             <MDButton color={action.color ? action.color : "dark"}>{action.label}</MDButton>
-          </MuiLink>
+          </Link>
         ) : (
-          <Link to={action.route}>
+          <Link to={action.route} state= {{ id: action.id}}>
             <MDButton color={action.color ? action.color : "dark"}>{action.label}</MDButton>
           </Link>
         )}
