@@ -5,12 +5,12 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import Profile from './components/profile';
-import Dashboard from './components/dashboard';
+import Profile from './components/Profile';
+import Dashboard from './components/Dashboard';
 
 const router = createBrowserRouter([
   {
-    path: "/dashboard",
+    path: "/",
     element: <Dashboard></Dashboard>,
   },
   {
