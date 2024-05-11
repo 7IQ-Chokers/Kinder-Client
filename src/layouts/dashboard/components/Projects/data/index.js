@@ -1,19 +1,5 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/function-component-definition */
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
 
 // @mui material components
 import Tooltip from "@mui/material/Tooltip";
@@ -71,7 +57,12 @@ export default function data() {
 
   return {
     columns: [
-      { Header: "companies", accessor: "companies", width: "45%", align: "left" },
+      {
+        Header: "companies",
+        accessor: "companies",
+        width: "45%",
+        align: "left",
+      },
       { Header: "members", accessor: "members", width: "10%", align: "left" },
       { Header: "budget", accessor: "budget", align: "center" },
       { Header: "completion", accessor: "completion", align: "center" },
@@ -97,7 +88,12 @@ export default function data() {
         ),
         completion: (
           <MDBox width="8rem" textAlign="left">
-            <MDProgress value={60} color="info" variant="gradient" label={false} />
+            <MDProgress
+              value={60}
+              color="info"
+              variant="gradient"
+              label={false}
+            />
           </MDBox>
         ),
       },
@@ -118,7 +114,12 @@ export default function data() {
         ),
         completion: (
           <MDBox width="8rem" textAlign="left">
-            <MDProgress value={10} color="info" variant="gradient" label={false} />
+            <MDProgress
+              value={10}
+              color="info"
+              variant="gradient"
+              label={false}
+            />
           </MDBox>
         ),
       },
@@ -139,7 +140,12 @@ export default function data() {
         ),
         completion: (
           <MDBox width="8rem" textAlign="left">
-            <MDProgress value={100} color="success" variant="gradient" label={false} />
+            <MDProgress
+              value={100}
+              color="success"
+              variant="gradient"
+              label={false}
+            />
           </MDBox>
         ),
       },
@@ -162,7 +168,12 @@ export default function data() {
         ),
         completion: (
           <MDBox width="8rem" textAlign="left">
-            <MDProgress value={100} color="success" variant="gradient" label={false} />
+            <MDProgress
+              value={100}
+              color="success"
+              variant="gradient"
+              label={false}
+            />
           </MDBox>
         ),
       },
@@ -180,12 +191,19 @@ export default function data() {
         ),
         completion: (
           <MDBox width="8rem" textAlign="left">
-            <MDProgress value={25} color="info" variant="gradient" label={false} />
+            <MDProgress
+              value={25}
+              color="info"
+              variant="gradient"
+              label={false}
+            />
           </MDBox>
         ),
       },
       {
-        companies: <Company image={logoInvesion} name="Redesign New Online Shop" />,
+        companies: (
+          <Company image={logoInvesion} name="Redesign New Online Shop" />
+        ),
         members: (
           <MDBox display="flex" py={1}>
             {avatars([
@@ -201,7 +219,12 @@ export default function data() {
         ),
         completion: (
           <MDBox width="8rem" textAlign="left">
-            <MDProgress value={40} color="info" variant="gradient" label={false} />
+            <MDProgress
+              value={40}
+              color="info"
+              variant="gradient"
+              label={false}
+            />
           </MDBox>
         ),
       },
