@@ -50,8 +50,9 @@ import routes from "routes";
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
 
 // Images
-import brandWhite from "assets/images/logo-ct.png";
-import brandDark from "assets/images/logo-ct-dark.png";
+import brandWhite from "assets/images/connectnsolve-high-resolution-logo-white.png";
+import brandDark from "assets/images/connectnsolve-high-resolution-logo-black.png";
+import brandTrans from "assets/images/connectnsolve-high-resolution-logo-transparent.png";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -154,7 +155,7 @@ export default function App() {
           <>
             <Sidenav
               color={sidenavColor}
-              brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
+              brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandTrans : brandTrans}
               brandName="Material Dashboard 2"
               routes={routes}
               onMouseEnter={handleOnMouseEnter}
@@ -178,7 +179,7 @@ export default function App() {
         <>
           <Sidenav
             color={sidenavColor}
-            brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
+            brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandTrans : brandTrans}
             brandName="connectNsolve"
             routes={routes}
             onMouseEnter={handleOnMouseEnter}
