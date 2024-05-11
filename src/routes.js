@@ -17,10 +17,6 @@ const routes = [
     component: <Dashboard />,
   },
   {
-    type: "collapse",
-    name: "Issues",
-    key: "issues",
-    icon: <Icon fontSize="small">warning</Icon>,
     route: "/issues",
     component: <Issues />,
   },
