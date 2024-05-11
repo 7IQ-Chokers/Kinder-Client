@@ -1,14 +1,14 @@
-import React from 'react';
-import { Card, Typography, TextField, Button, Divider, Box } from '@mui/material';
+import React from "react";
+import { Card, Typography, TextField, Button, Divider, Box } from "@mui/material";
 import MDButton from "components/MDButton";
-import Thread from "examples/Lists/ThreadsList"
+import Thread from "examples/Lists/ThreadsList";
 
 class ThreadComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       messages: [],
-      newMessage: '',
+      newMessage: "",
     };
   }
 
@@ -18,20 +18,16 @@ class ThreadComponent extends React.Component {
 
   handleSendMessage = () => {
     const { newMessage, messages } = this.state;
-    if (newMessage.trim() !== '') {
+    if (newMessage.trim() !== "") {
       const updatedMessages = [...messages, newMessage];
-      this.setState({ messages: updatedMessages, newMessage: '' });
+      this.setState({ messages: updatedMessages, newMessage: "" });
     }
   };
 
   render() {
     const { messages, newMessage } = this.state;
     const renderthread = messages.map((message, index) => (
-        <Thread
-            userName="abcd"
-            description={message}
-            value={index}
-            />
+      <Thread userName="abcd" description={message} value={index} />
     ));
     return (
       <Card>
@@ -53,9 +49,11 @@ class ThreadComponent extends React.Component {
             rows={3}
           />
           {/* Button to send new message */}
-        <Box mt={1}>
-            <MDButton color="dark" onClick={this.handleSendMessage}>"post"</MDButton>   
-        </Box>
+          <Box mt={1}>
+            <MDButton color="dark" onClick={this.handleSendMessage}>
+              "post"
+            </MDButton>
+          </Box>
         </Box>
       </Card>
     );
