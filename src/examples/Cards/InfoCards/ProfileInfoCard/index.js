@@ -89,7 +89,6 @@ function ProfileInfoCard({ title, description, info, intrests, action, shadow })
                 size="small"
                 disableRipple
                 color="inherit"
-                // sx={navbarIconButton}
                 onClick={handleConfiguratorOpen}
               >
                 <Icon>edit</Icon>

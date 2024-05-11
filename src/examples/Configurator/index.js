@@ -32,6 +32,13 @@ import {
   setSidenavColor,
   setDarkMode,
 } from "context";
+import {
+  Input,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextareaAutosize,
+} from "@mui/material";
 
 function Configurator() {
   const [controller, dispatch] = useMaterialUIController();
@@ -44,7 +51,19 @@ function Configurator() {
     darkMode,
   } = controller;
   const [disabled, setDisabled] = useState(false);
-  const sidenavColors = ["primary", "dark", "info", "success", "warning", "error"];
+  const sidenavColors = [
+    "primary",
+    "dark",
+    "info",
+    "success",
+    "warning",
+    "error",
+  ];
+
+  const [name, setName] = useState("");
+  const [bio, setBio] = useState("");
+  const [phone, setPhone] = useState("");
+  const [organization, setOrganization] = useState("");
 
   // Use the useEffect hook to change the button state for the sidenav type based on window size.
   useEffect(() => {
@@ -78,7 +97,10 @@ function Configurator() {
   };
   const handleFixedNavbar = () => setFixedNavbar(dispatch, !fixedNavbar);
   const handleDarkMode = () => setDarkMode(dispatch, !darkMode);
-
+  const handleUpdate = async() =>{
+    console.log(name,phone,bio,organization)
+    //POST DATA back
+  }
   // sidenav type buttons styles
   const sidenavTypeButtonsStyles = ({
     functions: { pxToRem },
@@ -103,14 +125,21 @@ function Configurator() {
     palette: { white, gradients, background },
   }) => ({
     height: pxToRem(39),
-    background: darkMode ? white.main : linearGradient(gradients.dark.main, gradients.dark.state),
+    background: darkMode
+      ? white.main
+      : linearGradient(gradients.dark.main, gradients.dark.state),
     color: darkMode ? background.sidenav : white.main,
 
     "&:hover, &:focus, &:focus:not(:hover)": {
-      background: darkMode ? white.main : linearGradient(gradients.dark.main, gradients.dark.state),
+      background: darkMode
+        ? white.main
+        : linearGradient(gradients.dark.main, gradients.dark.state),
       color: darkMode ? background.sidenav : white.main,
     },
   });
+
+  //TODO: make a select options form the thing
+
 
   return (
     <ConfiguratorRoot variant="permanent" ownerState={{ openConfigurator }}>
@@ -123,10 +152,10 @@ function Configurator() {
         px={3}
       >
         <MDBox>
-          <MDTypography variant="h5">Material UI Configurator</MDTypography>
-          <MDTypography variant="body2" color="text">
+          <MDTypography variant="h5">Edit Details</MDTypography>
+          {/* <MDTypography variant="body2" color="text">
             See our dashboard options.
-          </MDTypography>
+          </MDTypography> */}
         </MDBox>
 
         <Icon
@@ -148,6 +177,30 @@ function Configurator() {
 
       <MDBox pt={0.5} pb={3} px={3}>
         <MDBox>
+          <MDTypography>Bio :</MDTypography>
+          <TextareaAutosize
+            minRows={7}
+            style={{ width: "100%" }}
+            onChange={(e)=>setBio(e.target.value)}
+          ></TextareaAutosize>
+        </MDBox>
+        <MDBox mt={3}>
+          <InputLabel>Full Name :</InputLabel>
+          <Input name="name" fullWidth={true} type="text" onChange={(e)=>setName(e.target.value)}></Input>
+        </MDBox>
+        <MDBox mt={3}>
+          <InputLabel>Phone :</InputLabel>
+          <Input name="phone" fullWidth={true} type="text" onChange={(e)=>setPhone(e.target.value)}></Input>
+        </MDBox>
+        <MDBox mt={3}>
+          <InputLabel>Organization :</InputLabel>
+          <Select name="phone" fullWidth={true} type="text" value={organization} onChange={(e)=>setOrganization(e.target.value)}>
+            <MenuItem value={10}>Ten</MenuItem>
+            <MenuItem value={20}>Twenty</MenuItem>
+            <MenuItem value={30}>Thirty</MenuItem>
+          </Select>
+        </MDBox>
+        {/* <MDBox>
           <MDTypography variant="h6">Sidenav Colors</MDTypography>
 
           <MDBox mb={0.5}>
@@ -263,8 +316,13 @@ function Configurator() {
 
           <Switch checked={fixedNavbar} onChange={handleFixedNavbar} />
         </MDBox>
-        <Divider />
-        <MDBox display="flex" justifyContent="space-between" alignItems="center" lineHeight={1}>
+        <Divider /> */}
+        <MDBox
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          lineHeight={1}
+        >
           <MDTypography variant="h6">Light / Dark</MDTypography>
 
           <Switch checked={darkMode} onChange={handleDarkMode} />
@@ -272,47 +330,13 @@ function Configurator() {
         <Divider />
         <MDBox mt={3} mb={2}>
           <MDButton
-            component={Link}
-            href="https://www.creative-tim.com/learning-lab/react/quick-start/material-dashboard/"
-            target="_blank"
-            rel="noreferrer"
+            onClick={handleUpdate}
             color={darkMode ? "light" : "dark"}
             variant="outlined"
             fullWidth
           >
-            view documentation
+            Update
           </MDButton>
-        </MDBox>
-        
-        <MDBox mt={2} textAlign="center">
-          <MDBox mb={0.5}>
-            <MDTypography variant="h6">Thank you for sharing!</MDTypography>
-          </MDBox>
-
-          <MDBox display="flex" justifyContent="center">
-            <MDBox mr={1.5}>
-              <MDButton
-                component={Link}
-                href="//twitter.com/intent/tweet?text=Check%20Material%20Dashboard%20React%20made%20by%20%40CreativeTim%20%23webdesign%20%23dashboard%20%23react%20%mui&url=https%3A%2F%2Fwww.creative-tim.com%2Fproduct%2Fmaterial-dashboard-react"
-                target="_blank"
-                rel="noreferrer"
-                color="dark"
-              >
-                <TwitterIcon />
-                &nbsp; Tweet
-              </MDButton>
-            </MDBox>
-            <MDButton
-              component={Link}
-              href="https://www.facebook.com/sharer/sharer.php?u=https://www.creative-tim.com/product/material-dashboard-react"
-              target="_blank"
-              rel="noreferrer"
-              color="dark"
-            >
-              <FacebookIcon />
-              &nbsp; Share
-            </MDButton>
-          </MDBox>
         </MDBox>
       </MDBox>
     </ConfiguratorRoot>
