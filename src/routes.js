@@ -8,6 +8,9 @@ import Proposals from "layouts/proposals";
 import Issues from "layouts/issues";
 import Projects from "layouts/projects";
 
+import AddIssue from "layouts/addforms/AddIssue";
+import AddProject from "layouts/addforms/AddProject";
+import AddProposal from "layouts/addforms/AddProposal";
 // @mui icons
 import Icon from "@mui/material/Icon";
 
@@ -23,6 +26,18 @@ const routes = [
   {
     route: "/proposals",
     component: <Proposals />,
+  },
+  {
+    route: "/proposals/create",
+    component: <AddProposal />,
+  },
+  {
+    route: "/projects/create",
+    component: <AddProject />,
+  },
+  {
+    route: "/issues/create",
+    component: <AddIssue />,
   },
   {
     route: "/issues",

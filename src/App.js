@@ -38,6 +38,7 @@ import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "co
 import brandWhite from "assets/images/connectnsolve-high-resolution-logo-white.png";
 import brandDark from "assets/images/connectnsolve-high-resolution-logo-black.png";
 import brandTrans from "assets/images/connectnsolve-high-resolution-logo-transparent.png";
+import { UserAuthContext } from "context/UserAuthContext";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();

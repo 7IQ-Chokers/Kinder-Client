@@ -26,7 +26,7 @@ function Overview() {
               <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
               <MDBox></MDBox>
               <Issuecards
-                tags = {["blah", "hey"]}
+                tags={["blah", "hey"]}
                 // title="profile information"
                 description="Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality)."
                 info={{
@@ -35,14 +35,21 @@ function Overview() {
                   email: "alecthompson@mail.com",
                   location: "USA",
                 }}
-                action={{ route: "/contribute", label: "Contribute", tooltip: "Edit Profile" }}
+                action={{
+                  route: "/projects/create",
+                  id: "proposal_id",
+                  label: "Contribute",
+                  tooltip: "Edit Profile",
+                }}
                 shadow={false}
               />
               <Divider orientation="vertical" sx={{ mx: 0 }} />
             </Grid>
-            <Grid item xs={12} md={12} xl={12}> {/* Ensure the Thread component spans the full width */}
+            <Grid item xs={12} md={12} xl={12}>
+              {" "}
+              {/* Ensure the Thread component spans the full width */}
               <Thread sx={{ width: "100%" }} />
-               {/* Set width to 100% to cover the full width */}
+              {/* Set width to 100% to cover the full width */}
             </Grid>
           </Grid>
         </MDBox>
