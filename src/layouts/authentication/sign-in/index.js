@@ -2,7 +2,7 @@ import sendOtpEmail from "controllers/sendOtpEmail";
 import { useContext, useEffect, useRef, useState } from "react";
 
 // react-router-dom components
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -21,17 +21,43 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 import submitOtp from "controllers/submitOtp";
 import { UserAuthContext } from "context/UserAuthContext";
+import { LocationContext } from "context/LocationContext";
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
   const [otpStage, setOtpStage] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [userOtp, setUserOtp] = useState("");
+  const [userLocation, setLocation] = useState("");
+  const [error, setError] = useState(null);
+  const { userAuthToken, setUserAuthToken } = useContext(UserAuthContext);
+  const { locationCoords, setLocationCoords } = useContext(LocationContext);
+
+
+  const getLocation = () => {
+    if (!navigator.geolocation) {
+      setError('Geolocation is not supported by your browser');
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setLocationCoords({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude
+        });
+        console.log(locationCoords.latitude)
+        console.log(locationCoords.longitude)
+      },
+      (error) => {
+        setError(`Error retrieving location: ${error.message}`);
+      }
+    );
+  };
+
   const navigate = useNavigate();
 
-  const { userAuthToken, setUserAuthToken } = useContext(UserAuthContext);
-
   useEffect(() => {
+    getLocation()
     // If user already loggedin, goto dashboard
     if (userAuthToken) {
       navigate("/dashboard");
