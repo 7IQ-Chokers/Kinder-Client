@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from "react";
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
@@ -20,7 +20,8 @@ import Header from "layouts/issues/components/Header";
 import projectsTableData from "layouts/tables/data/projectsTableData";
 import { UserAuthContext } from "context/UserAuthContext";
 import { useLocation } from "react-router-dom";
-import { BACKEND_PROJECTS_BASE_URL } from 'config/config';
+import { BACKEND_PROJECTS_BASE_URL } from "config/config";
+import UpDownVote from "../../examples/Cards/UpDownVote";
 
 function Overview() {
   const [proposals, setProposals] = useState([]);
@@ -33,32 +34,34 @@ function Overview() {
     // Fetch data from API endpoint
     const issueId = location.state.id;
 
-    const fetchProposals = async()=>{
-
-
-      fetch(BACKEND_PROJECTS_BASE_URL+"/proposals/forProblem",{
-        method: "POST", 
+    const fetchProposals = async () => {
+      fetch(BACKEND_PROJECTS_BASE_URL + "/proposals/forProblem", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer "+userAuthToken,
+          Authorization: "Bearer " + userAuthToken,
         },
-        body:JSON.stringify({problemId:issueId})
-      }).then(function(response) {
-        return response.json();
-    })
-    .then(function(jsonData) {
-      if(jsonData.status === 'success'){setProposals(jsonData.data.proposals);}
-    })}
+        body: JSON.stringify({ problemId: issueId }),
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (jsonData) {
+          if (jsonData.status === "success") {
+            setProposals(jsonData.data.proposals);
+          }
+        });
+    };
 
     fetchProposals();
   }, []);
 
   // Define columns for the table
   const columns = [
-    { label: 'Proposal',accessor: 'Proposal', key: 'id' },
-    { label: 'Author',accessor: 'Author', key: 'author' },
-    { label: 'Upvotes',accessor: 'Upvotes', key: 'upvotes' },
-    { label: 'Downvotes',accessor: 'Downvotes', key: 'downvotes' },
+    { label: "Proposal", accessor: "Proposal", key: "id" },
+    { label: "Author", accessor: "Author", key: "author" },
+    { label: "Upvotes", accessor: "Upvotes", key: "upvotes" },
+    { label: "Downvotes", accessor: "Downvotes", key: "downvotes" },
   ];
 
   return (
@@ -70,41 +73,46 @@ function Overview() {
             <Grid item xs={12} md={12} xl={12} sx={{ display: "flex" }}>
               <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
               <Issuecards
-                tags = {issue.tags || []}
+                tags={issue.tags || []}
                 description={issue.description}
                 title={issue.title}
-                action={{ route: "/projects/create", id:issue.id, label: "Contribute", tooltip: "Edit Profile" }}
+                action={{
+                  route: "/projects/create",
+                  id: issue.id,
+                  label: "Contribute",
+                  tooltip: "Edit Profile",
+                }}
                 shadow={false}
               />
               <Divider orientation="vertical" sx={{ mx: 0 }} />
             </Grid>
-          <Grid item xs={12}>
-            <Card>
-              <MDBox
-                mx={2}
-                mt={-3}
-                py={3}
-                px={2}
-                variant="gradient"
-                bgColor="dark"
-                borderRadius="lg"
-                coloredShadow="dark"
-              >
-                <MDTypography variant="h6" color="white">
-                  Proposals
-                </MDTypography>
-              </MDBox>
-              <MDBox pt={3}>
-                <DataTable
-                  table={{ columns: columns, rows: proposals }}
-                  isSorted={false}
-                  entriesPerPage={false}
-                  showTotalEntries={false}
-                  noEndBorder
-                />
-              </MDBox>
-            </Card>
-          </Grid>
+            <Grid item xs={12}>
+              <Card>
+                <MDBox
+                  mx={2}
+                  mt={-3}
+                  py={3}
+                  px={2}
+                  variant="gradient"
+                  bgColor="dark"
+                  borderRadius="lg"
+                  coloredShadow="dark"
+                >
+                  <MDTypography variant="h6" color="white">
+                    Proposals
+                  </MDTypography>
+                </MDBox>
+                <MDBox pt={3}>
+                  <DataTable
+                    table={{ columns: columns, rows: proposals }}
+                    isSorted={false}
+                    entriesPerPage={false}
+                    showTotalEntries={false}
+                    noEndBorder
+                  />
+                </MDBox>
+              </Card>
+            </Grid>
           </Grid>
         </MDBox>
       </Header>

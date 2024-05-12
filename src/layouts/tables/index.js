@@ -22,7 +22,6 @@ import { Link } from "react-router-dom";
 import { BACKEND_PROJECTS_BASE_URL } from "config/config";
 
 function Tables() {
-
   const [issues, setIssues] = useState([]);
 
   const { columns, rows } = issuesTableData(issues);
@@ -30,74 +29,75 @@ function Tables() {
   const { userAuthToken, setUserAuthToken } = useContext(UserAuthContext);
   const { locationCoords, setLocationCoords } = useContext(LocationContext);
 
+  useEffect(() => {
+    const fetchProblems = async () => {
+      let data = { location: locationCoords, maxDistanceInMetres: 1000 };
+      let res = await fetch(BACKEND_PROJECTS_BASE_URL + "/problems", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + userAuthToken,
+        },
+        redirect: "follow",
+        body: JSON.stringify(data),
+      });
+      return res.json();
+    };
 
-  const fetchProblems = async()=>{
-    let data = {"location":{"longitude":locationCoords.longitude,"latitude":locationCoords.latitude},"maxDistanceInMetres":1000}
-    let res = await fetch(BACKEND_PROJECTS_BASE_URL+"/problems",{
-      method: "POST", 
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer "+userAuthToken,
-      },
-      redirect: "follow", 
-      body: JSON.stringify(data),
-    }).then(function(response) {
-      return response.json();
-  })
-  .then(function(jsonData) {
-    console.log(jsonData);
-    setIssues(jsonData.data.problems);
-  })
-  }
+    let res = fetchProblems();
+    if (res.status === "success") {
+      setIssues(res);
+    }
+  }, []);
 
-  useEffect( () => {
-    if(userAuthToken){fetchProblems();}
-  }, [userAuthToken])
-
-  return userAuthToken ? ( locationCoords ? (
-    <DashboardLayout>
-      <DashboardNavbar />
-      <MDBox pt={6} pb={3}>
-        <Grid container spacing={6}>
-          <Grid item xs={12}>
-            <Card>
-              <MDBox
-                mx={2}
-                mt={-3}
-                py={3}
-                px={2}
-                variant="gradient"
-                bgColor="dark"
-                borderRadius="lg"
-                coloredShadow="dark"
-                display="flex" 
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <MDTypography variant="h6" color="white">
-                  Issues
-                </MDTypography>
-                <Link to={"/issues/create"}>
-                <MDButton variant="outlined" color="light" size="small">Add Issue</MDButton>
-                </Link>
-              </MDBox>
-              <MDBox pt={3}>
-                <DataTable
-                  table={{ columns, rows }}
-                  isSorted={false}
-                  entriesPerPage={false}
-                  showTotalEntries={false}
-                  noEndBorder
-                />
-              </MDBox>
-            </Card>
+  return userAuthToken ? (
+    locationCoords ? (
+      <DashboardLayout>
+        <DashboardNavbar />
+        <MDBox pt={6} pb={3}>
+          <Grid container spacing={6}>
+            <Grid item xs={12}>
+              <Card>
+                <MDBox
+                  mx={2}
+                  mt={-3}
+                  py={3}
+                  px={2}
+                  variant="gradient"
+                  bgColor="dark"
+                  borderRadius="lg"
+                  coloredShadow="dark"
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
+                  <MDTypography variant="h6" color="white">
+                    Issues
+                  </MDTypography>
+                  <Link to={"/issues/create"}>
+                    <MDButton variant="outlined" color="light" size="small">
+                      Add Issue
+                    </MDButton>
+                  </Link>
+                </MDBox>
+                <MDBox pt={3}>
+                  <DataTable
+                    table={{ columns, rows }}
+                    isSorted={false}
+                    entriesPerPage={false}
+                    showTotalEntries={false}
+                    noEndBorder
+                  />
+                </MDBox>
+              </Card>
+            </Grid>
           </Grid>
-        </Grid>
-      </MDBox>
-    </DashboardLayout>
-  ): (
-    <center>Cannot get locations</center>
-  ) ) : (
+        </MDBox>
+      </DashboardLayout>
+    ) : (
+      <center>Cannot get locations</center>
+    )
+  ) : (
     <center>Login First!</center>
   );
 }
