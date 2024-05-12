@@ -17,7 +17,7 @@ import Thread from "layouts/proposals/components/Threads";
 import { useLocation, useNavigate } from "react-router-dom";
 import UpDownVote from "examples/Cards/UpDownVote";
 import { useContext, useEffect, useState } from "react";
-import { BACKEND_PROFILE_SERVICE_BASE_URL } from "config/config";
+import { BACKEND_PROJECTS_BASE_URL } from "config/config";
 import { UserAuthContext } from "context/UserAuthContext";
 
 function Overview() {
@@ -34,8 +34,8 @@ function Overview() {
       (async () => {
         // Get project details from ID
         const response = await fetch(
-          // `${BACKEND_PROFILE_SERVICE_BASE_URL}/projects/${location.state.id}`
-          `${BACKEND_PROFILE_SERVICE_BASE_URL}/projects/663f6db34e26cfd79a9f9fa5`,
+          // `${BACKEND_PROJECTS_BASE_URL}/projects/${location.state.id}`
+          `${BACKEND_PROJECTS_BASE_URL}/projects/663f6db34e26cfd79a9f9fa5`,
           { headers: { Authorization: `Bearer ${userAuthToken}` } }
         );
         const projectDetails = await response.json();
