@@ -17,6 +17,8 @@ import authorsTableData from "layouts/tables/data/issuesTableData";
 import projectsTableData from "layouts/tables/data/projectsTableData";
 import { useContext } from "react";
 import { UserAuthContext } from "context/UserAuthContext";
+import MDButton from "components/MDButton";
+import { Link } from "react-router-dom";
 
 function Tables() {
   const { columns, rows } = authorsTableData();
@@ -39,10 +41,16 @@ function Tables() {
                 bgColor="dark"
                 borderRadius="lg"
                 coloredShadow="dark"
+                display="flex"  // Set display to flex
+                justifyContent="space-between" // Align items to the right
+                alignItems="center" // Align items vertically centered
               >
                 <MDTypography variant="h6" color="white">
                   Issues
                 </MDTypography>
+                <Link to={"/issues/create"}>
+                <MDButton variant="outlined" color="light" size="small">Add Issue</MDButton>
+                </Link>                
               </MDBox>
               <MDBox pt={3}>
                 <DataTable
