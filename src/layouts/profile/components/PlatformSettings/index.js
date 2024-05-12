@@ -18,7 +18,7 @@ function PlatformSettings({isInvest}) {
 
   useEffect(() => {
     setIsInvestor(isInvest)
-  }, [])
+  }, [isInvest])
   
   const handleInvestor = async() =>{
   setIsInvestor(!isInvestor);

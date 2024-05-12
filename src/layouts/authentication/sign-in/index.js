@@ -42,8 +42,8 @@ function Basic() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         setLocationCoords({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude
+          latitude:"34.0522",
+          longitude:"-118.2437" 
         });
       },
       (error) => {

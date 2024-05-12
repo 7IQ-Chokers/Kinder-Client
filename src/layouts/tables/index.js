@@ -31,27 +31,28 @@ function Tables() {
   const { locationCoords, setLocationCoords } = useContext(LocationContext);
 
 
+  const fetchProblems = async()=>{
+    let data = {"location":{"longitude":locationCoords.longitude,"latitude":locationCoords.latitude},"maxDistanceInMetres":1000}
+    let res = await fetch(BACKEND_PROJECTS_BASE_URL+"/problems",{
+      method: "POST", 
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer "+userAuthToken,
+      },
+      redirect: "follow", 
+      body: JSON.stringify(data),
+    }).then(function(response) {
+      return response.json();
+  })
+  .then(function(jsonData) {
+    console.log(jsonData);
+    setIssues(jsonData.data.problems);
+  })
+  }
 
-  useEffect(() => {
-    const fetchProblems = async()=>{
-      let data = {"location":locationCoords,"maxDistanceInMetres":1000}
-      let res = await fetch(BACKEND_PROJECTS_BASE_URL+"/problems",{
-        method: "POST", 
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer "+userAuthToken,
-        },
-        redirect: "follow", 
-        body: JSON.stringify(data),
-      });
-      return res.json();
-    }
-
-    let res = fetchProblems();
-    if(res.status === 'success'){
-      setIssues(res);}
-
-  }, [])
+  useEffect( () => {
+    if(userAuthToken){fetchProblems();}
+  }, [userAuthToken])
 
   return userAuthToken ? ( locationCoords ? (
     <DashboardLayout>
