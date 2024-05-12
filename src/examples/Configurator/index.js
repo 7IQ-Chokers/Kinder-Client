@@ -228,7 +228,7 @@ function Configurator() {
           ></Input>
         </MDBox>
         <MDBox mt={3}>
-          <InputLabel>Intrests :</InputLabel>
+          <InputLabel>Interests :</InputLabel>
           <TagsInput tags={tags} setTags={setTags}></TagsInput>
         </MDBox>
         {/* <MDBox>

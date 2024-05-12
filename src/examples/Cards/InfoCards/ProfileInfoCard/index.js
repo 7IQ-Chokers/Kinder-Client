@@ -26,38 +26,21 @@ import {
   setMiniSidenav,
   setOpenConfigurator,
 } from "context";
-function ProfileInfoCard({
-  title,
-  description,
-  info,
-  intrests,
-  action,
-  shadow,
-}) {
+function ProfileInfoCard({ title, description, info, intrests, action, shadow }) {
   const labels = [];
   const values = [];
   const { size } = typography;
 
   const [controller, dispatch] = useMaterialUIController();
-  const {
-    miniSidenav,
-    transparentNavbar,
-    fixedNavbar,
-    openConfigurator,
-    darkMode,
-  } = controller;
+  const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator, darkMode } = controller;
 
-  const handleConfiguratorOpen = () =>
-    setOpenConfigurator(dispatch, !openConfigurator);
+  const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
 
   // Convert this form `objectKey` of the object key in to this `object key`
   Object.keys(info).forEach((el) => {
     if (el.match(/[A-Z\s]+/)) {
       const uppercaseLetter = Array.from(el).find((i) => i.match(/[A-Z]+/));
-      const newElement = el.replace(
-        uppercaseLetter,
-        ` ${uppercaseLetter.toLowerCase()}`
-      );
+      const newElement = el.replace(uppercaseLetter, ` ${uppercaseLetter.toLowerCase()}`);
 
       labels.push(newElement);
     } else {
@@ -71,11 +54,7 @@ function ProfileInfoCard({
   // Render the card info items
   const renderItems = labels.map((label, key) => (
     <MDBox key={label} display="flex" py={1} pr={2}>
-      <MDTypography
-        variant="button"
-        fontWeight="bold"
-        textTransform="capitalize"
-      >
+      <MDTypography variant="button" fontWeight="bold" textTransform="capitalize">
         {label}: &nbsp;
       </MDTypography>
       <MDTypography variant="button" fontWeight="regular" color="text">
@@ -92,44 +71,23 @@ function ProfileInfoCard({
   //         <span className="text">{tag}</span>
   //         <span >&times;</span>
   //     </div>
-  // )) 
+  // ))
 
   const renderSocial = intrests.map((intrest) => (
-    <MDBox
-      fontSize={size.lg}
-      color={colors.grey["500"]}
-      pr={1}
-      pl={0.5}
-      lineHeight={1}
-    >
+    <MDBox fontSize={size.lg} color={colors.grey["500"]} pr={1} pl={0.5} lineHeight={1}>
       {intrest}
     </MDBox>
   ));
 
   return (
     <Card sx={{ height: "100%", boxShadow: !shadow && "none" }}>
-      <MDBox
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-        pt={2}
-        px={2}
-      >
-        <MDTypography
-          variant="h6"
-          fontWeight="medium"
-          textTransform="capitalize"
-        >
+      <MDBox display="flex" justifyContent="space-between" alignItems="center" pt={2} px={2}>
+        <MDTypography variant="h6" fontWeight="medium" textTransform="capitalize">
           {title}
         </MDTypography>
         <MDTypography variant="body2" color="secondary">
           <Tooltip title={action.tooltip} placement="top">
-            <IconButton
-              size="small"
-              disableRipple
-              color="inherit"
-              onClick={handleConfiguratorOpen}
-            >
+            <IconButton size="small" disableRipple color="inherit" onClick={handleConfiguratorOpen}>
               <Icon>edit</Icon>
             </IconButton>
           </Tooltip>
@@ -147,12 +105,8 @@ function ProfileInfoCard({
         <MDBox>
           {renderItems}
           <MDBox display="flex" py={1} pr={2}>
-            <MDTypography
-              variant="button"
-              fontWeight="bold"
-              textTransform="capitalize"
-            >
-              Intrests: &nbsp;
+            <MDTypography variant="button" fontWeight="bold" textTransform="capitalize">
+              Interests: &nbsp;
             </MDTypography>
             {renderSocial}
           </MDBox>
