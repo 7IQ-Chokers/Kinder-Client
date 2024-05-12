@@ -39,6 +39,7 @@ import brandWhite from "assets/images/connectnsolve-high-resolution-logo-white.p
 import brandDark from "assets/images/connectnsolve-high-resolution-logo-black.png";
 import brandTrans from "assets/images/connectnsolve-high-resolution-logo-transparent.png";
 import { UserAuthContext } from "context/UserAuthContext";
+import { LocationContext } from "context/LocationContext";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -134,6 +135,7 @@ export default function App() {
   );
 
   const [userAuthToken, setUserAuthToken] = useState(null);
+  const [locationCoords, setLocationCoords] = useState(null);
 
   useEffect(() => {
     // If authToken already in localStorage, load that
@@ -148,6 +150,7 @@ export default function App() {
   }, []);
 
   return direction === "rtl" ? (
+    <LocationContext.Provider value={{ locationCoords, setLocationCoords }}>
     <UserAuthContext.Provider value={{ userAuthToken, setUserAuthToken }}>
       <CacheProvider value={rtlCache}>
         <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
@@ -174,7 +177,9 @@ export default function App() {
         </ThemeProvider>
       </CacheProvider>
     </UserAuthContext.Provider>
+    </LocationContext.Provider>
   ) : (
+    <LocationContext.Provider value={{ locationCoords, setLocationCoords }}>
     <UserAuthContext.Provider value={{ userAuthToken, setUserAuthToken }}>
       <ThemeProvider theme={darkMode ? themeDark : theme}>
         <CssBaseline />
@@ -199,5 +204,6 @@ export default function App() {
         </Routes>
       </ThemeProvider>
     </UserAuthContext.Provider>
+    </LocationContext.Provider>
   );
 }
