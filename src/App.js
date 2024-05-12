@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useContext } from "react";
 
 // react-router components
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 
 // @mui material components
 import { ThemeProvider } from "@mui/material/styles";
@@ -43,6 +43,7 @@ import { LocationContext } from "context/LocationContext";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
+
   const {
     miniSidenav,
     direction,
@@ -67,10 +68,10 @@ export default function App() {
     setRtlCache(cacheRtl);
   }, []);
 
-  const handleLogout = ()=>{
+  const handleLogout = () => {
     setUserAuthToken(null);
     localStorage.clear();
-  }
+  };
 
   // Open sidenav when mouse enter on mini sidenav
   const handleOnMouseEnter = () => {
@@ -142,6 +143,26 @@ export default function App() {
   const [userAuthToken, setUserAuthToken] = useState(null);
   const [locationCoords, setLocationCoords] = useState(null);
 
+  const [error, setError] = useState(null);
+
+  const getLocation = () => {
+    if (!navigator.geolocation) {
+      setError("Geolocation is not supported by your browser");
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setLocationCoords({
+          latitude: "34.0522",
+          longitude: "-118.2437",
+        });
+      },
+      (error) => {
+        setError(`Error retrieving location: ${error.message}`);
+      }
+    );
+  };
+
   useEffect(() => {
     // If authToken already in localStorage, load that
     const localStorageAuthToken = window.localStorage.getItem("userAuthToken");
@@ -154,18 +175,57 @@ export default function App() {
     }
   }, []);
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    getLocation();
+    // If user already loggedin, goto dashboard
+    if (userAuthToken) {
+      navigate("/dashboard");
+    }
+  }, []);
+
   return direction === "rtl" ? (
     <LocationContext.Provider value={{ locationCoords, setLocationCoords }}>
-    <UserAuthContext.Provider value={{ userAuthToken, setUserAuthToken }}>
-      <CacheProvider value={rtlCache}>
-        <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
+      <UserAuthContext.Provider value={{ userAuthToken, setUserAuthToken }}>
+        <CacheProvider value={rtlCache}>
+          <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
+            <CssBaseline />
+            {layout === "dashboard" && (
+              <>
+                <Sidenav
+                  color={sidenavColor}
+                  brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
+                  brandName="Material Dashboard 2"
+                  handleLogout={handleLogout}
+                  routes={routes}
+                  onMouseEnter={handleOnMouseEnter}
+                  onMouseLeave={handleOnMouseLeave}
+                />
+                <Configurator />
+                {/* {configsButton} */}
+              </>
+            )}
+            {layout === "vr" && <Configurator />}
+            <Routes>
+              {getRoutes(routes)}
+              <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+          </ThemeProvider>
+        </CacheProvider>
+      </UserAuthContext.Provider>
+    </LocationContext.Provider>
+  ) : (
+    <LocationContext.Provider value={{ locationCoords, setLocationCoords }}>
+      <UserAuthContext.Provider value={{ userAuthToken, setUserAuthToken }}>
+        <ThemeProvider theme={darkMode ? themeDark : theme}>
           <CssBaseline />
           {layout === "dashboard" && (
             <>
               <Sidenav
                 color={sidenavColor}
                 brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-                brandName="Material Dashboard 2"
+                brandName="ConnectNSolve"
                 handleLogout={handleLogout}
                 routes={routes}
                 onMouseEnter={handleOnMouseEnter}
@@ -181,36 +241,7 @@ export default function App() {
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </ThemeProvider>
-      </CacheProvider>
-    </UserAuthContext.Provider>
-    </LocationContext.Provider>
-  ) : (
-    <LocationContext.Provider value={{ locationCoords, setLocationCoords }}>
-    <UserAuthContext.Provider value={{ userAuthToken, setUserAuthToken }}>
-      <ThemeProvider theme={darkMode ? themeDark : theme}>
-        <CssBaseline />
-        {layout === "dashboard" && (
-          <>
-            <Sidenav
-              color={sidenavColor}
-              brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-              brandName="ConnectNSolve"
-                handleLogout={handleLogout}
-                routes={routes}
-              onMouseEnter={handleOnMouseEnter}
-              onMouseLeave={handleOnMouseLeave}
-            />
-            <Configurator />
-            {/* {configsButton} */}
-          </>
-        )}
-        {layout === "vr" && <Configurator />}
-        <Routes>
-          {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-      </ThemeProvider>
-    </UserAuthContext.Provider>
+      </UserAuthContext.Provider>
     </LocationContext.Provider>
   );
 }

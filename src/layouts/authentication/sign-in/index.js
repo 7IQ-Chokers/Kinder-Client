@@ -28,41 +28,11 @@ function Basic() {
   const [otpStage, setOtpStage] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [userOtp, setUserOtp] = useState("");
-  const [userLocation, setLocation] = useState("");
-  const [error, setError] = useState(null);
+
   const { userAuthToken, setUserAuthToken } = useContext(UserAuthContext);
   const { locationCoords, setLocationCoords } = useContext(LocationContext);
 
-
-  const getLocation = () => {
-    if (!navigator.geolocation) {
-      setError('Geolocation is not supported by your browser');
-      return;
-    }
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setLocationCoords({
-          latitude:"34.0522",
-          longitude:"-118.2437" 
-        });
-      },
-      (error) => {
-        setError(`Error retrieving location: ${error.message}`);
-      }
-    );
-  };
-
   const navigate = useNavigate();
-
-  useEffect(() => {
-    getLocation()
-    // If user already loggedin, goto dashboard
-    if (userAuthToken) {
-      navigate("/dashboard");
-    }
-  }, []);
-
-  const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
   return (
     <BasicLayout image={bgImage}>

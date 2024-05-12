@@ -39,7 +39,7 @@ import { BACKEND_USER_SERVICE_BASE_URL } from "config/config";
 
 function Configurator() {
   const [controller, dispatch] = useMaterialUIController();
-  const [userData, setUserData] = useState({})
+  const [userData, setUserData] = useState({});
   const {
     openConfigurator,
     fixedNavbar,
@@ -90,30 +90,30 @@ function Configurator() {
   const handleFixedNavbar = () => setFixedNavbar(dispatch, !fixedNavbar);
   const handleDarkMode = () => setDarkMode(dispatch, !darkMode);
 
-  const [tags, setTags] = useState([])
+  const [tags, setTags] = useState([]);
 
   useEffect(() => {
-    const fetchUser = async()=>{
-      let res = await fetch(BACKEND_USER_SERVICE_BASE_URL+"/user/protected/profile",{
-        method: "GET", 
+    const fetchUser = async () => {
+      let res = await fetch(BACKEND_USER_SERVICE_BASE_URL + "/user/protected/profile", {
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer "+userAuthToken,
+          Authorization: "Bearer " + userAuthToken,
         },
       });
       return res.json();
+    };
+    if (userAuthToken) {
+      let res = fetchUser();
+      if (res.status === "success") {
+        setUserData(res);
+        setTags(userData.intrests);
+      }
     }
-    let res = fetchUser();
-    if(res.status === 'success'){
-      setUserData(res);
-      setTags(userData.intrests)
-    }
+  }, [userAuthToken]);
 
-  }, [])
-  
-    
   const handleUpdate = async () => {
-    console.log(name, phone, bio, organization,tags);
+    console.log(name, phone, bio, organization, tags);
     let data = {
       name: name === "" ? userData.name : name,
       phone: phone === "" ? userData.phone : phone,

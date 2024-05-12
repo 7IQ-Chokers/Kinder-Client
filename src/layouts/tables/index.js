@@ -30,25 +30,29 @@ function Tables() {
   const { locationCoords, setLocationCoords } = useContext(LocationContext);
 
   useEffect(() => {
-    const fetchProblems = async () => {
-      let data = { location: locationCoords, maxDistanceInMetres: 1000 };
+    const fetchProblems = async (_userAuthToken, _locationCoords) => {
+      let data = { location: _locationCoords, maxDistanceInMetres: 1000000 };
       let res = await fetch(BACKEND_PROJECTS_BASE_URL + "/problems", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + userAuthToken,
+          Authorization: "Bearer " + _userAuthToken,
         },
-        redirect: "follow",
         body: JSON.stringify(data),
       });
       return res.json();
     };
-
-    let res = fetchProblems();
-    if (res.status === "success") {
-      setIssues(res);
+    if (userAuthToken && locationCoords) {
+      // alert(`${userAuthToken} | ${JSON.stringify(locationCoords)}`);
+      (async () => {
+        let res = await fetchProblems(userAuthToken, locationCoords);
+        console.log(res);
+        if (res.status === "success") {
+          setIssues(res.data.problems);
+        }
+      })();
     }
-  }, []);
+  }, [userAuthToken, locationCoords]);
 
   return userAuthToken ? (
     locationCoords ? (
@@ -95,7 +99,7 @@ function Tables() {
         </MDBox>
       </DashboardLayout>
     ) : (
-      <center>Cannot get locations</center>
+      <center>Location loading...</center>
     )
   ) : (
     <center>Login First!</center>

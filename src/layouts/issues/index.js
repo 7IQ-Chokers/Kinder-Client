@@ -34,7 +34,7 @@ function Overview() {
     // Fetch data from API endpoint
     const issueId = location.state.id;
 
-    const fetchProposals = async () => {
+    const fetchProposals = () => {
       fetch(BACKEND_PROJECTS_BASE_URL + "/proposals/forProblem", {
         method: "POST",
         headers: {
@@ -52,9 +52,10 @@ function Overview() {
           }
         });
     };
-
-    fetchProposals();
-  }, []);
+    if (userAuthToken) {
+      fetchProposals();
+    }
+  }, [userAuthToken]);
 
   // Define columns for the table
   const columns = [

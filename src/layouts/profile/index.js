@@ -30,30 +30,29 @@ import { useEffect, useState, useContext } from "react";
 import { BACKEND_USER_SERVICE_BASE_URL } from "config/config";
 
 function Overview() {
-
   const [user, setUser] = useState({});
-  
+
   const { userAuthToken, setUserAuthToken } = useContext(UserAuthContext);
-  const fetchUser = async()=>{
-
-
-    fetch(BACKEND_USER_SERVICE_BASE_URL+"/user/protected/profile",{
-      method: "GET", 
+  const fetchUser = async () => {
+    fetch(BACKEND_USER_SERVICE_BASE_URL + "/user/protected/profile", {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer "+userAuthToken,
+        Authorization: "Bearer " + userAuthToken,
       },
-    }).then(function(response) {
-      return response.json();
-  })
-  .then(function(jsonData) {
-    setUser(jsonData.data);
-  })
-
-  }
-  useEffect( () => {
-    if(userAuthToken){fetchUser();}
-  }, [userAuthToken])
+    })
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (jsonData) {
+        setUser(jsonData.data);
+      });
+  };
+  useEffect(() => {
+    if (userAuthToken) {
+      fetchUser();
+    }
+  }, [userAuthToken]);
 
   return (
     <DashboardLayout>
@@ -72,7 +71,7 @@ function Overview() {
                   mobile: user.phone,
                   email: user.email,
                 }}
-                intrests={user.interests??[]}
+                intrests={user.interests ?? []}
                 action={{ route: "", tooltip: "Edit Profile" }}
                 shadow={false}
               />
