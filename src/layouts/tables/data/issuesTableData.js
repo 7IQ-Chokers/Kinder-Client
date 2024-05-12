@@ -32,7 +32,7 @@ export default function data(issues) {
       let row = {};
       row = {...row,issue:<Problem  title={problem.title} id={problem.id}/>}
       row = {...row,author:<TableData title={problem.created_by} />}
-      row = {...row,location:<TableData title= {problem.location.type}/>}
+      row = {...row,location:<TableData title= {problem.location.displayName??"--"}/>}
       row = {...row,upvotes:<TableData title={problem.upvotes || 0} />}
       row = {...row,downvotes:<TableData title={problem.downvotes || 0} />}
       rows.push(row);

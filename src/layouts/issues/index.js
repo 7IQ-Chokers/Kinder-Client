@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
@@ -18,11 +18,14 @@ import DataTable from "examples/Tables/DataTable";
 // Overview page components
 import Header from "layouts/issues/components/Header";
 import projectsTableData from "layouts/tables/data/projectsTableData";
+import { UserAuthContext } from "context/UserAuthContext";
 import { useLocation } from "react-router-dom";
+import { BACKEND_PROJECTS_BASE_URL } from 'config/config';
 
 function Overview() {
   const [proposals, setProposals] = useState([]);
   const [issue, setIssue] = useState({});
+  const { userAuthToken, setUserAuthToken } = useContext(UserAuthContext);
 
   const location = useLocation();
 
@@ -30,12 +33,24 @@ function Overview() {
     // Fetch data from API endpoint
     const issueId = location.state.id;
 
-    const fetchDetails = async()=>{
-      // let res = await fetch();
-      //fetchboth proposals and issue details
-    }
+    const fetchProposals = async()=>{
 
-    fetchDetails();
+
+      fetch(BACKEND_PROJECTS_BASE_URL+"/proposals/forProblem",{
+        method: "POST", 
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer "+userAuthToken,
+        },
+        body:JSON.stringify({problemId:issueId})
+      }).then(function(response) {
+        return response.json();
+    })
+    .then(function(jsonData) {
+      if(jsonData.status === 'success'){setProposals(jsonData.data.proposals);}
+    })}
+
+    fetchProposals();
   }, []);
 
   // Define columns for the table
