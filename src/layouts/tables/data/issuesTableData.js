@@ -1,10 +1,6 @@
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import MDAvatar from "components/MDAvatar";
-import MDBadge from "components/MDBadge";
-import {problems} from "./dummy"
-import MDButton from "components/MDButton";
 import { Link } from "react-router-dom";
 
 export default function data(issues) {
