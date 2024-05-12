@@ -61,7 +61,7 @@ function AddProposal() {
               <MDBox pt={3} mx={3}>
                 <MDBox>
                   <InputLabel>Description :</InputLabel>
-                  <TextareaAutosize minRows={7} style={{ width: "100%" }} onChange={(e)=>setDescription(e.target.value)}></TextareaAutosize>
+                  <TextareaAutosize minRows={7} style={{ width: "100%", borderRadius:"5px" }} onChange={(e)=>setDescription(e.target.value)}></TextareaAutosize>
                 </MDBox>
               </MDBox>
               <MDBox pt={3} mx={3}>
@@ -70,12 +70,10 @@ function AddProposal() {
                   <TagsInput minRows={7} style={{ width: "100%" }} tags={tags} setTags={setTags}></TagsInput>
                 </MDBox>
               </MDBox>
-              <MDBox mt={3} mb={2}>
+              <MDBox mt={3} mb={2} mx={3}>
           <MDButton
             onClick={handleCreate}
             color={darkMode ? "light" : "dark"}
-            variant="outlined"
-            fullWidth
           >
             Create Proposal
           </MDButton>
