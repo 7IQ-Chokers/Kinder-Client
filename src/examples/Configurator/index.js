@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 // react-github-btn
 import GitHubButton from "react-github-btn";
@@ -21,6 +21,7 @@ import MDButton from "components/MDButton";
 
 // Custom styles for the Configurator
 import ConfiguratorRoot from "examples/Configurator/ConfiguratorRoot";
+import { UserAuthContext } from "context/UserAuthContext";
 
 // Material Dashboard 2 React context
 import {
@@ -32,16 +33,13 @@ import {
   setSidenavColor,
   setDarkMode,
 } from "context";
-import {
-  Input,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextareaAutosize,
-} from "@mui/material";
+import { Input, InputLabel, MenuItem, Select, TextareaAutosize } from "@mui/material";
+import TagsInput from "examples/TagsInput";
+import { BACKEND_USER_SERVICE_BASE_URL } from "config/config";
 
 function Configurator() {
   const [controller, dispatch] = useMaterialUIController();
+  const [userData, setUserData] = useState({})
   const {
     openConfigurator,
     fixedNavbar,
@@ -51,14 +49,7 @@ function Configurator() {
     darkMode,
   } = controller;
   const [disabled, setDisabled] = useState(false);
-  const sidenavColors = [
-    "primary",
-    "dark",
-    "info",
-    "success",
-    "warning",
-    "error",
-  ];
+  const sidenavColors = ["primary", "dark", "info", "success", "warning", "error"];
 
   const [name, setName] = useState("");
   const [bio, setBio] = useState("");
@@ -81,6 +72,7 @@ function Configurator() {
     // Remove event listener on cleanup
     return () => window.removeEventListener("resize", handleDisabled);
   }, []);
+  const { userAuthToken, setUserAuthToken } = useContext(UserAuthContext);
 
   const handleCloseConfigurator = () => setOpenConfigurator(dispatch, false);
   const handleTransparentSidenav = () => {
@@ -97,10 +89,48 @@ function Configurator() {
   };
   const handleFixedNavbar = () => setFixedNavbar(dispatch, !fixedNavbar);
   const handleDarkMode = () => setDarkMode(dispatch, !darkMode);
-  const handleUpdate = async() =>{
-    console.log(name,phone,bio,organization)
-    //POST DATA back
-  }
+
+  const [tags, setTags] = useState([])
+
+  useEffect(() => {
+    const fetchUser = async()=>{
+      let res = await fetch(BACKEND_USER_SERVICE_BASE_URL+"/user/protected/profile",{
+        method: "GET", 
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer "+userAuthToken,
+        },
+      });
+      return res.json();
+    }
+    let res = fetchUser();
+    if(res.status === 'success'){
+      setUserData(res);
+      setTags(userData.tags)
+    }
+
+  }, [])
+  
+    
+  const handleUpdate = async () => {
+    console.log(name, phone, bio, organization);
+    let data = {
+      name: name === "" ? userData.name : name,
+      phone: phone === "" ? userData.phone : phone,
+      bio: bio === "" ? userData.bio : bio,
+      orgId: organization,
+      tags: tags,
+    };
+    let res = await fetch(BACKEND_USER_SERVICE_BASE_URL + "/user/protected/updateprofile", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + userAuthToken,
+      },
+      body: JSON.stringify(data),
+    });
+    return res.json();
+  };
   // sidenav type buttons styles
   const sidenavTypeButtonsStyles = ({
     functions: { pxToRem },
@@ -125,21 +155,16 @@ function Configurator() {
     palette: { white, gradients, background },
   }) => ({
     height: pxToRem(39),
-    background: darkMode
-      ? white.main
-      : linearGradient(gradients.dark.main, gradients.dark.state),
+    background: darkMode ? white.main : linearGradient(gradients.dark.main, gradients.dark.state),
     color: darkMode ? background.sidenav : white.main,
 
     "&:hover, &:focus, &:focus:not(:hover)": {
-      background: darkMode
-        ? white.main
-        : linearGradient(gradients.dark.main, gradients.dark.state),
+      background: darkMode ? white.main : linearGradient(gradients.dark.main, gradients.dark.state),
       color: darkMode ? background.sidenav : white.main,
     },
   });
 
   //TODO: make a select options form the thing
-
 
   return (
     <ConfiguratorRoot variant="permanent" ownerState={{ openConfigurator }}>
@@ -181,24 +206,30 @@ function Configurator() {
           <TextareaAutosize
             minRows={7}
             style={{ width: "100%" }}
-            onChange={(e)=>setBio(e.target.value)}
+            onChange={(e) => setBio(e.target.value)}
           ></TextareaAutosize>
         </MDBox>
         <MDBox mt={3}>
           <InputLabel>Full Name :</InputLabel>
-          <Input name="name" fullWidth={true} type="text" onChange={(e)=>setName(e.target.value)}></Input>
+          <Input
+            name="name"
+            fullWidth={true}
+            type="text"
+            onChange={(e) => setName(e.target.value)}
+          ></Input>
         </MDBox>
         <MDBox mt={3}>
           <InputLabel>Phone :</InputLabel>
-          <Input name="phone" fullWidth={true} type="text" onChange={(e)=>setPhone(e.target.value)}></Input>
+          <Input
+            name="phone"
+            fullWidth={true}
+            type="text"
+            onChange={(e) => setPhone(e.target.value)}
+          ></Input>
         </MDBox>
         <MDBox mt={3}>
-          <InputLabel>Organization :</InputLabel>
-          <Select name="phone" fullWidth={true} type="text" value={organization} onChange={(e)=>setOrganization(e.target.value)}>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
+          <InputLabel>Intrests :</InputLabel>
+          <TagsInput tags={tags} setTags={setTags}></TagsInput>
         </MDBox>
         {/* <MDBox>
           <MDTypography variant="h6">Sidenav Colors</MDTypography>
@@ -317,12 +348,7 @@ function Configurator() {
           <Switch checked={fixedNavbar} onChange={handleFixedNavbar} />
         </MDBox>
         <Divider /> */}
-        <MDBox
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-          lineHeight={1}
-        >
+        <MDBox display="flex" justifyContent="space-between" alignItems="center" lineHeight={1}>
           <MDTypography variant="h6">Light / Dark</MDTypography>
 
           <Switch checked={darkMode} onChange={handleDarkMode} />

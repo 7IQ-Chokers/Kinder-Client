@@ -9,6 +9,7 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
+import profilePic from "assets/images/default-profile-picture-avatar-photo-260nw-1681253560.webp";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -23,9 +24,37 @@ import Header from "layouts/profile/components/Header";
 import PlatformSettings from "layouts/profile/components/PlatformSettings";
 
 // Data
+import { UserAuthContext } from "context/UserAuthContext";
 import user from "layouts/profile/data/profilesListData";
+import { useEffect, useState, useContext } from "react";
+import { BACKEND_USER_SERVICE_BASE_URL } from "config/config";
 
 function Overview() {
+
+  const [user, setUser] = useState({});
+  
+  const { userAuthToken, setUserAuthToken } = useContext(UserAuthContext);
+  const fetchUser = async()=>{
+
+
+    fetch(BACKEND_USER_SERVICE_BASE_URL+"/user/protected/profile",{
+      method: "GET", 
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer "+userAuthToken,
+      },
+    }).then(function(response) {
+      return response.json();
+  })
+  .then(function(jsonData) {
+    setUser(jsonData.data);
+  })
+
+  }
+  useEffect( () => {
+    if(userAuthToken){fetchUser();}
+  }, [userAuthToken])
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -37,13 +66,13 @@ function Overview() {
               <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
               <ProfileInfoCard
                 title="Bio"
-                description="Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality)."
+                description={user.bio ?? ""}
                 info={{
                   fullName: user.name,
                   mobile: user.phone,
                   email: user.email,
                 }}
-                intrests={user.intrests}
+                intrests={user.intrests?? []}
                 action={{ route: "", tooltip: "Edit Profile" }}
                 shadow={false}
               />

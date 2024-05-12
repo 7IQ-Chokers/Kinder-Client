@@ -34,7 +34,7 @@ function Tables() {
 
   useEffect(() => {
     const fetchProblems = async()=>{
-      let data = {"location":{"longitude":23.345,"latitude":12.2453},"maxDistanceInMetres":1000}
+      let data = {"location":locationCoords,"maxDistanceInMetres":1000}
       let res = await fetch(BACKEND_PROJECTS_BASE_URL+"/problems",{
         method: "POST", 
         headers: {
@@ -53,8 +53,7 @@ function Tables() {
 
   }, [])
 
-
-  return userAuthToken ? (
+  return userAuthToken ? ( locationCoords ? (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox pt={6} pb={3}>
@@ -79,7 +78,7 @@ function Tables() {
                 </MDTypography>
                 <Link to={"/issues/create"}>
                 <MDButton variant="outlined" color="light" size="small">Add Issue</MDButton>
-                </Link>                
+                </Link>
               </MDBox>
               <MDBox pt={3}>
                 <DataTable

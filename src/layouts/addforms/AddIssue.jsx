@@ -7,13 +7,37 @@ import Footer from "examples/Footer";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import TagsInput from "examples/TagsInput";
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { LocationContext } from "context/LocationContext";
+import { UserAuthContext } from "context/UserAuthContext";
+import { BACKEND_PROJECTS_BASE_URL } from "config/config";
 
 function AddIssue() {
 
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const [tags, setTags] = useState([])
+    const { locationCoords, setLocationCoords } = useContext(LocationContext);
+    const { userAuthToken, setUserAuthToken } = useContext(UserAuthContext);
+
+    useEffect(() => {
+      const addProblem = async()=>{
+        let data = {"title":title,"description":description,"media":[],"tags":tags,"location":{"coordinates":locationCoords}}
+        let res = await fetch(BACKEND_PROJECTS_BASE_URL+"/problems/add",{
+          method: "POST", 
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer "+userAuthToken,
+          },
+          redirect: "follow", 
+          body: JSON.stringify(data),
+        });
+        return res.json();
+      }
+
+      addProblem();
+    }, [])
+    
     
 
   return (
@@ -49,7 +73,7 @@ function AddIssue() {
               <MDBox pt={3} mx={3}>
                 <MDBox>
                   <InputLabel>Description :</InputLabel>
-                  <TextareaAutosize minRows={7} style={{ width: "100%", borderRadius:"5px" }}></TextareaAutosize>
+                  <TextareaAutosize minRows={7} style={{ width: "100%", borderRadius:"5px" }} onChange={(e)=>setDescription(e.target.value)}></TextareaAutosize>
                 </MDBox>
               </MDBox>
               <MDBox pt={3} mx={3}>

@@ -8,6 +8,7 @@ import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
+import profilePic from "assets/images/default-profile-picture-avatar-photo-260nw-1681253560.webp";
 import Tab from "@mui/material/Tab";
 import Icon from "@mui/material/Icon";
 
@@ -79,7 +80,7 @@ function Header({ user,children }) {
       >
         <Grid container spacing={3} alignItems="center">
           <Grid item>
-            <MDAvatar src={user.profilePic} alt="profile-image" size="xl" shadow="sm" />
+            <MDAvatar src={profilePic} alt="profile-image" size="xl" shadow="sm" />
           </Grid>
           <Grid item>
             <MDBox height="100%" mt={0.5} lineHeight={1}>
