@@ -8,12 +8,13 @@ import MDBox from "components/MDBox";
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
+
 import Issuecards from "examples/Cards/Issuecard";
 
 // Overview page components
-import Header from "layouts/proposals/components/Header";
-import Thread from "layouts/proposals/components/Threads";
+import Header from "layouts/projects/components/Header";
+import MDButton from "components/MDButton";
+import { Icon } from "@mui/material";
 
 function Overview() {
   return (
@@ -35,7 +36,7 @@ function Overview() {
                   email: "alecthompson@mail.com",
                   location: "USA",
                 }}
-                action={{ route: "/contribute", label: "Contribute", tooltip: "Edit Profile" }}
+                action={{ route: "/contribute", label: "invest", tooltip: "Invest on a project" }}
                 shadow={false}
               />
               <Divider orientation="vertical" sx={{ mx: 0 }} />

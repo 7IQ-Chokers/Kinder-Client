@@ -1,18 +1,3 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useState, useEffect } from "react";
 
 // prop-types is a library for typechecking of props.
@@ -21,9 +6,6 @@ import PropTypes from "prop-types";
 // @mui material components
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
-import AppBar from "@mui/material/AppBar";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
 import Icon from "@mui/material/Icon";
 
 // Material Dashboard 2 React components
@@ -36,11 +18,12 @@ import breakpoints from "assets/theme/base/breakpoints";
 
 // Images
 import burceMars from "assets/images/bruce-mars.jpg";
-import backgroundImage from "assets/images/bg-profile.jpeg";
+import MDButton from "components/MDButton";
 
 function Header({ children }) {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
+  const [voteValue, setvoteValue] = useState(0);
 
   useEffect(() => {
     // A function that sets the orientation state of the tabs.
@@ -63,7 +46,12 @@ function Header({ children }) {
   }, [tabsOrientation]);
 
   const handleSetTabValue = (event, newValue) => setTabValue(newValue);
-
+  const handleupvote = () => {
+    setvoteValue((prevUpvotes) => prevUpvotes + 1);
+  };
+  const handledownvote = () => {
+    setvoteValue((prevUpvotes) => prevUpvotes - 1);
+  };
   return (
     <MDBox position="relative" mb={5}>
       <MDBox
@@ -86,11 +74,8 @@ function Header({ children }) {
           py: 2,
           px: 2,
         }}
-      >
-        <Grid container spacing={3} alignItems="center">
-          <Grid item>
-            <MDAvatar src={burceMars} alt="profile-image" size="xl" shadow="sm" />
-          </Grid>
+      >         
+        <Grid container spacing={3} alignItems="center" display="flex" justifyContent="space-between">
           <Grid item>
             <MDBox height="100%" mt={0.5} lineHeight={1}>
               <MDTypography variant="h5" fontWeight="medium">
@@ -100,6 +85,15 @@ function Header({ children }) {
                 summary
               </MDTypography>
             </MDBox>
+          </Grid>
+          <Grid item>
+            <MDButton variant="text" size="medium" color="dark" onClick={handleupvote}>
+              <Icon sx={{ strokeWidth: 3 }}>arrow_upward_alt</Icon>
+            </MDButton>
+            <MDButton variant="text" size="medium" color="dark" onClick={handledownvote}>
+              <Icon sx={{ strokeWidth: 3 }}>arrow_downward_alt</Icon>
+            </MDButton>
+          <MDButton>{voteValue}</MDButton>
           </Grid>
         </Grid>
         {children}

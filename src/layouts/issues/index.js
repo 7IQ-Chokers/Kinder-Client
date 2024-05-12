@@ -58,7 +58,14 @@ function Overview() {
                 tags = {issue.tags || []}
                 description={issue.description}
                 title={issue.title}
-                action={{ route: "/projects/create", id:issue.id, label: "Contribute", tooltip: "Edit Profile" }}
+                action={{ route: "/projects/create", id:issue.id, label: "Create Project", tooltip: "Add project to contribute" }}
+                shadow={false}
+              />
+              <Issuecards
+                tags = {issue.tags || []}
+                description={issue.description}
+                title={issue.title}
+                action={{ route: "/proposals/create", id:issue.id, label: "Create Proposal", tooltip: "Add project to contribute" }}
                 shadow={false}
               />
               <Divider orientation="vertical" sx={{ mx: 0 }} />

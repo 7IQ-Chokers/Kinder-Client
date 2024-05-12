@@ -45,8 +45,8 @@ function Basic() {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude
         });
-        console.log(locationCoords.latitude)
-        console.log(locationCoords.longitude)
+        // console.log(locationCoords.latitude)
+        // console.log(locationCoords.longitude)
       },
       (error) => {
         setError(`Error retrieving location: ${error.message}`);

@@ -1,12 +1,8 @@
 // react-router components
 import { Link } from "react-router-dom";
 
-// prop-types is a library for typechecking of props
-import PropTypes from "prop-types";
-
 // @mui material components
 import Card from "@mui/material/Card";
-import MuiLink from "@mui/material/Link";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -73,7 +69,7 @@ function SimpleBlogCard({ image, title, description, action, tags}) {
         <MDBox display="flex" flexWrap="wrap">
           {rendertag}
         </MDBox>
-        {action.type === "external" ? (
+        {action && ( action.type === "external" ? (
           <Link to={action.route} state= {{ id: action.id}} target="_blank" rel="noopener noreferrer">
             <MDButton color={action.color ? action.color : "dark"}>{action.label}</MDButton>
           </Link>
@@ -81,7 +77,7 @@ function SimpleBlogCard({ image, title, description, action, tags}) {
           <Link to={action.route} state= {{ id: action.id}}>
             <MDButton color={action.color ? action.color : "dark"}>{action.label}</MDButton>
           </Link>
-        )}
+        ))}
       </MDBox>
     </Card>
   );
