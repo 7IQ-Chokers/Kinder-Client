@@ -30,6 +30,9 @@ import {
   navbarMobileMenu,
 } from "examples/Navbars/DashboardNavbar/styles";
 
+
+import { useContext } from "react";
+import { UserAuthContext } from "context/UserAuthContext";
 // Material Dashboard 2 React context
 import {
   useMaterialUIController,
@@ -50,6 +53,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
   } = controller;
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
+  const { userAuthToken, setUserAuthToken } = useContext(UserAuthContext);
 
   useEffect(() => {
     // Setting the navbar type
@@ -154,11 +158,15 @@ function DashboardNavbar({ absolute, light, isMini }) {
               <MDInput label="Search here" />
             </MDBox>
             <MDBox color={light ? "white" : "inherit"}>
-              <Link to="/">
+              { userAuthToken ?<Link to="/">
                 <IconButton sx={navbarIconButton} size="small" disableRipple>
                   <Icon sx={iconsStyle}>account_circle</Icon>
                 </IconButton>
-              </Link>
+              </Link>:<Link to="/">
+                <IconButton sx={navbarIconButton} size="small" disableRipple>
+                  <Icon sx={iconsStyle}>account_circle</Icon>
+                </IconButton>
+              </Link>}
               <IconButton
                 size="small"
                 disableRipple

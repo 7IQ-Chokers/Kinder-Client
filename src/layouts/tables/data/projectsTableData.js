@@ -7,13 +7,14 @@ import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDProgress from "components/MDProgress";
 import { projects } from "./dummy";
+import { Link } from "react-router-dom";
 export default function data() {
   
-  const Project = ({title}) => {
-    <MDTypography display="block" variant="button" fontWeight="medium">
-      {title}
-    </MDTypography>
-  }
+  const Project = ({title,id}) => (
+    <Link to={'/projects'} state= {{ id: id}}>
+      <MDTypography color={ "dark"} fontWeight="medium" fontSize="medium">{title}</MDTypography>
+    </Link>
+  )
 
   const TableData = ({title}) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -40,12 +41,12 @@ export default function data() {
   
   const populateRows = () => {
     let rows = [];
-    projects.forEach(projects => {
+    projects.forEach(project => {
       let row = {};
-      row = {...row,project:<TableData  title={projects.title} />}
-      row = {...row,author:<TableData title={projects.created_by} />}
-      row = {...row,upvotes:<TableData title={projects.upvotes || 0} />}
-      row = {...row,downvotes:<TableData title={projects.downvotes || 0} />}
+      row = {...row,project:<Project  title={project.title} id={project.id} />}
+      row = {...row,author:<TableData title={project.created_by} />}
+      row = {...row,upvotes:<TableData title={project.upvotes || 0} />}
+      row = {...row,downvotes:<TableData title={project.downvotes || 0} />}
       rows.push(row);
     });
     return rows;

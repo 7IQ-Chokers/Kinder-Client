@@ -19,25 +19,31 @@ import DataTable from "examples/Tables/DataTable";
 import Header from "layouts/issues/components/Header";
 import projectsTableData from "layouts/tables/data/projectsTableData";
 import { useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
 
 function Overview() {
   const [proposals, setProposals] = useState([]);
+  const [issue, setIssue] = useState({});
+
+  const location = useLocation();
 
   useEffect(() => {
     // Fetch data from API endpoint
-    fetch('http://localhost:3000/proposals')
-      .then(response => response.json())
-      .then(data => setProposals(data))
-      .catch(error => console.error('Error fetching proposals:', error));
+    const issueId = location.state.id;
+
+    const fetchDetails = async()=>{
+      // let res = await fetch();
+      //fetchboth proposals and issue details
+    }
+
+    fetchDetails();
   }, []);
 
   // Define columns for the table
   const columns = [
-    { label: 'Proposal', key: 'id' },
-    { label: 'Author', key: 'author' },
-    { label: 'Upvotes', key: 'upvotes' },
-    { label: 'Downvotes', key: 'downvotes' },
+    { label: 'Proposal',accessor: 'Proposal', key: 'id' },
+    { label: 'Author',accessor: 'Author', key: 'author' },
+    { label: 'Upvotes',accessor: 'Upvotes', key: 'upvotes' },
+    { label: 'Downvotes',accessor: 'Downvotes', key: 'downvotes' },
   ];
 
   return (
@@ -49,10 +55,10 @@ function Overview() {
             <Grid item xs={12} md={12} xl={12} sx={{ display: "flex" }}>
               <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
               <Issuecards
-                tags = {issue.tags}
+                tags = {issue.tags || []}
                 description={issue.description}
                 title={issue.title}
-                action={{ route: "/contribute", label: "Contribute", tooltip: "Edit Profile" }}
+                action={{ route: "/projects/create", id:issue.id, label: "Contribute", tooltip: "Edit Profile" }}
                 shadow={false}
               />
               <Divider orientation="vertical" sx={{ mx: 0 }} />
