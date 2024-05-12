@@ -92,7 +92,6 @@ function Tables() {
           </Grid>
         </Grid>
       </MDBox>
-      <Footer />
     </DashboardLayout>
   ) : (
     <center>Login First!</center>
