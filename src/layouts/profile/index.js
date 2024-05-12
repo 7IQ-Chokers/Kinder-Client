@@ -31,7 +31,8 @@ import { BACKEND_USER_SERVICE_BASE_URL } from "config/config";
 
 function Overview() {
   const [user, setUser] = useState({});
-
+  
+  const [isInvestor, setIsInvestor] = useState(false);
   const { userAuthToken, setUserAuthToken } = useContext(UserAuthContext);
   const fetchUser = async () => {
     fetch(BACKEND_USER_SERVICE_BASE_URL + "/user/protected/profile", {
@@ -40,19 +41,18 @@ function Overview() {
         "Content-Type": "application/json",
         Authorization: "Bearer " + userAuthToken,
       },
-    })
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (jsonData) {
-        setUser(jsonData.data);
-      });
-  };
-  useEffect(() => {
-    if (userAuthToken) {
-      fetchUser();
-    }
-  }, [userAuthToken]);
+    }).then(function(response) {
+      return response.json();
+  })
+  .then(function(jsonData) {
+    setUser(jsonData.data);
+    setIsInvestor(jsonData.data.isInvestor);
+  })
+
+  }
+  useEffect( () => {
+    if(userAuthToken){fetchUser();}
+  }, [userAuthToken])
 
   return (
     <DashboardLayout>
@@ -78,7 +78,7 @@ function Overview() {
               <Divider orientation="vertical" sx={{ mx: 0 }} />
             </Grid>
             <Grid item xs={12} md={6} xl={6}>
-              <PlatformSettings isInvest={user.isInvestor} />
+              <PlatformSettings isInvestor={isInvestor} setIsInvestor={setIsInvestor} />
             </Grid>
           </Grid>
         </MDBox>
