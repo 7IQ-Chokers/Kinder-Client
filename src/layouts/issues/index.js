@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
@@ -19,7 +20,24 @@ import Header from "layouts/issues/components/Header";
 import projectsTableData from "layouts/tables/data/projectsTableData";
 
 function Overview() {
-  const { columns: pColumns, rows: pRows } = projectsTableData();
+  const [proposals, setProposals] = useState([]);
+
+  useEffect(() => {
+    // Fetch data from API endpoint
+    fetch('http://localhost:3000/proposals')
+      .then(response => response.json())
+      .then(data => setProposals(data))
+      .catch(error => console.error('Error fetching proposals:', error));
+  }, []);
+
+  // Define columns for the table
+  const columns = [
+    { label: 'Proposal', key: 'id' },
+    { label: 'Author', key: 'author' },
+    { label: 'Upvotes', key: 'upvotes' },
+    { label: 'Downvotes', key: 'downvotes' },
+  ];
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -60,7 +78,7 @@ function Overview() {
               </MDBox>
               <MDBox pt={3}>
                 <DataTable
-                  table={{ columns: pColumns, rows: pRows }}
+                  table={{ columns: columns, rows: proposals }}
                   isSorted={false}
                   entriesPerPage={false}
                   showTotalEntries={false}

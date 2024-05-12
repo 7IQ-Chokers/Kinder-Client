@@ -56,7 +56,7 @@ export default function data() {
       { Header: "projects", accessor: "project", width: "45%", align: "left" },
       { Header: "author", accessor: "author", align: "left" },
       { Header: "upvotes", accessor: "upvotes", align: "center" },
-      { Header: "downvotes", accessor: "downvotes", align: "center" },
+      { Header: "downvotes", accessor: "downvotes", align: "center", Cells: ""},
     ],
 
     rows: populateRows()
