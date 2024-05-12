@@ -106,20 +106,20 @@ function Configurator() {
     let res = fetchUser();
     if(res.status === 'success'){
       setUserData(res);
-      setTags(userData.tags)
+      setTags(userData.intrests)
     }
 
   }, [])
   
     
   const handleUpdate = async () => {
-    console.log(name, phone, bio, organization);
+    console.log(name, phone, bio, organization,tags);
     let data = {
       name: name === "" ? userData.name : name,
       phone: phone === "" ? userData.phone : phone,
       bio: bio === "" ? userData.bio : bio,
       orgId: organization,
-      tags: tags,
+      interests: tags,
     };
     let res = await fetch(BACKEND_USER_SERVICE_BASE_URL + "/user/protected/updateprofile", {
       method: "PUT",

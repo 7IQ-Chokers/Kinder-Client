@@ -86,6 +86,14 @@ function ProfileInfoCard({
 
   //TODO: Create a better tagUI
   // Render the card social media icons
+  console.log(intrests);
+  // const renderSocial = ()=>intrests.map((tag, index) => (
+  //     <div className="tag-item" key={index}>
+  //         <span className="text">{tag}</span>
+  //         <span >&times;</span>
+  //     </div>
+  // )) 
+
   const renderSocial = intrests.map((intrest) => (
     <MDBox
       fontSize={size.lg}

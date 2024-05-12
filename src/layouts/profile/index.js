@@ -72,14 +72,14 @@ function Overview() {
                   mobile: user.phone,
                   email: user.email,
                 }}
-                intrests={user.intrests?? []}
+                intrests={user.interests??[]}
                 action={{ route: "", tooltip: "Edit Profile" }}
                 shadow={false}
               />
               <Divider orientation="vertical" sx={{ mx: 0 }} />
             </Grid>
             <Grid item xs={12} md={6} xl={6}>
-              <PlatformSettings />
+              <PlatformSettings isInvest={user.isInvestor} />
             </Grid>
           </Grid>
         </MDBox>
