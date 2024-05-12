@@ -66,6 +66,11 @@ export default function App() {
     setRtlCache(cacheRtl);
   }, []);
 
+  const handleLogout = ()=>{
+    setUserAuthToken(null);
+    localStorage.clear();
+  }
+
   // Open sidenav when mouse enter on mini sidenav
   const handleOnMouseEnter = () => {
     if (miniSidenav && !onMouseEnter) {
@@ -158,6 +163,7 @@ export default function App() {
                 color={sidenavColor}
                 brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
                 brandName="Material Dashboard 2"
+                handleLogout={handleLogout}
                 routes={routes}
                 onMouseEnter={handleOnMouseEnter}
                 onMouseLeave={handleOnMouseLeave}
@@ -184,7 +190,8 @@ export default function App() {
               color={sidenavColor}
               brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
               brandName="ConnectNSolve"
-              routes={routes}
+                handleLogout={handleLogout}
+                routes={routes}
               onMouseEnter={handleOnMouseEnter}
               onMouseLeave={handleOnMouseLeave}
             />

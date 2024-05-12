@@ -13,19 +13,47 @@ import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-import authorsTableData from "layouts/tables/data/issuesTableData";
+import issuesTableData from "layouts/tables/data/issuesTableData";
 import projectsTableData from "layouts/tables/data/projectsTableData";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserAuthContext } from "context/UserAuthContext";
 import MDButton from "components/MDButton";
 import { Link } from "react-router-dom";
+import { BACKEND_PROJECTS_BASE_URL } from "config/config";
 
 function Tables() {
-  const { columns, rows } = authorsTableData();
+
+  const [issues, setIssues] = useState([]);
+
+  const { columns, rows } = issuesTableData(issues);
   const { columns: pColumns, rows: pRows } = projectsTableData();
   const { userAuthToken, setUserAuthToken } = useContext(UserAuthContext);
 
-  return true ? (
+
+
+  useEffect(() => {
+    const fetchProblems = async()=>{
+      let data = {"location":{"longitude":23.345,"latitude":12.2453},"maxDistanceInMetres":1000}
+      let res = await fetch(BACKEND_PROJECTS_BASE_URL+"/problems",{
+        method: "POST", 
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer "+userAuthToken,
+        },
+        redirect: "follow", 
+        body: JSON.stringify(data),
+      });
+      return res.json();
+    }
+
+    let res = fetchProblems();
+    if(res.status === 'success'){
+      setIssues(res);}
+
+  }, [])
+
+
+  return userAuthToken ? (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox pt={6} pb={3}>

@@ -7,7 +7,9 @@ import {problems} from "./dummy"
 import MDButton from "components/MDButton";
 import { Link } from "react-router-dom";
 
-export default function data() {
+export default function data(issues) {
+
+  console.log("ISSUES",issues);
 
   const TableData = ({title}) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -30,7 +32,7 @@ export default function data() {
 
   const populateRows = () => {
     let rows = [];
-    problems.forEach(problem => {
+    issues.forEach(problem => {
       let row = {};
       row = {...row,issue:<Problem  title={problem.title} id={problem.id}/>}
       row = {...row,author:<TableData title={problem.created_by} />}
