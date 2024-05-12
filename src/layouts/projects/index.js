@@ -14,8 +14,19 @@ import Issuecards from "examples/Cards/Issuecard";
 // Overview page components
 import Header from "layouts/proposals/components/Header";
 import Thread from "layouts/proposals/components/Threads";
+import { useLocation } from "react-router-dom";
+import UpDownVote from "examples/Cards/UpDownVote";
+import { useEffect, useState } from "react";
 
 function Overview() {
+  const location = useLocation();
+
+  const [project, setProject] = useState(null);
+
+  useEffect(async () => {
+    // Get project details from ID
+  }, []);
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -25,10 +36,12 @@ function Overview() {
             <Grid item xs={12} md={12} xl={12} sx={{ display: "flex" }}>
               <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
               <MDBox></MDBox>
+              {/* <UpDownVote id={location.state.id} /> */}
+              <UpDownVote />
               <Issuecards
-                tags = {["blah", "hey"]}
+                tags={["blah", "hey"]}
                 // title="profile information"
-                description="Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality)."
+                description="Hi, I'm Alec Thompson, Decisions: If you can't decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality)."
                 info={{
                   fullName: "Alec M. Thompson",
                   mobile: "(44) 123 1234 123",

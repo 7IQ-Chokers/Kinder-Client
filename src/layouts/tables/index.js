@@ -25,7 +25,7 @@ function Tables() {
   const { columns: pColumns, rows: pRows } = projectsTableData();
   const { userAuthToken, setUserAuthToken } = useContext(UserAuthContext);
 
-  return true ? (
+  return userAuthToken ? (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox pt={6} pb={3}>
@@ -41,7 +41,7 @@ function Tables() {
                 bgColor="dark"
                 borderRadius="lg"
                 coloredShadow="dark"
-                display="flex"  // Set display to flex
+                display="flex" // Set display to flex
                 justifyContent="space-between" // Align items to the right
                 alignItems="center" // Align items vertically centered
               >
@@ -49,8 +49,10 @@ function Tables() {
                   Issues
                 </MDTypography>
                 <Link to={"/issues/create"}>
-                <MDButton variant="outlined" color="light" size="small">Add Issue</MDButton>
-                </Link>                
+                  <MDButton variant="outlined" color="light" size="small">
+                    Add Issue
+                  </MDButton>
+                </Link>
               </MDBox>
               <MDBox pt={3}>
                 <DataTable
