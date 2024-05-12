@@ -4,6 +4,8 @@ import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDBadge from "components/MDBadge";
 import {problems} from "./dummy"
+import MDButton from "components/MDButton";
+import { Link } from "react-router-dom";
 
 export default function data() {
 
@@ -15,11 +17,22 @@ export default function data() {
     </MDBox>
   )
 
+  const Problem = ({title,id}) => (
+    <Link to={'/issues'} state= {{ id: id}}>
+            <MDTypography color={ "dark"} fontWeight="medium" fontSize="medium">{title}</MDTypography>
+          </Link>
+    // <MDBox display="flex" alignItems="center" lineHeight={1}>
+    //   <MDTypography variant="button" fontWeight="medium">
+    //     {title}
+    //   </MDTypography>
+    // </MDBox>
+  )
+
   const populateRows = () => {
     let rows = [];
     problems.forEach(problem => {
       let row = {};
-      row = {...row,issue:<TableData  title={problem.title} />}
+      row = {...row,issue:<Problem  title={problem.title} id={problem.id}/>}
       row = {...row,author:<TableData title={problem.created_by} />}
       row = {...row,location:<TableData title= {problem.location}/>}
       row = {...row,upvotes:<TableData title={problem.upvotes || 0} />}

@@ -23,7 +23,7 @@ function Tables() {
   const { columns: pColumns, rows: pRows } = projectsTableData();
   const { userAuthToken, setUserAuthToken } = useContext(UserAuthContext);
 
-  return userAuthToken ? (
+  return true ? (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox pt={6} pb={3}>

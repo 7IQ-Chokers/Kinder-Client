@@ -18,6 +18,8 @@ import DataTable from "examples/Tables/DataTable";
 // Overview page components
 import Header from "layouts/issues/components/Header";
 import projectsTableData from "layouts/tables/data/projectsTableData";
+import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 function Overview() {
   const [proposals, setProposals] = useState([]);
@@ -47,14 +49,9 @@ function Overview() {
             <Grid item xs={12} md={12} xl={12} sx={{ display: "flex" }}>
               <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
               <Issuecards
-                tags = {["blah", "hey"]}
-                description="Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality)."
-                info={{
-                  fullName: "Alec M. Thompson",
-                  mobile: "(44) 123 1234 123",
-                  email: "alecthompson@mail.com",
-                  location: "USA",
-                }}
+                tags = {issue.tags}
+                description={issue.description}
+                title={issue.title}
                 action={{ route: "/contribute", label: "Contribute", tooltip: "Edit Profile" }}
                 shadow={false}
               />
